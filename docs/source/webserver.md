@@ -2,6 +2,66 @@
 ZCurveHub is an integrated platform for genomic Z-curve feature analysis based on ZCurvePy, and it is freely available on https://tubic.tju.edu.cn/zcurve/.
 
 ## Z-curve Plotter
+Z-curve Plotter allows users to upload 1 to 3 nucleotide sequences and select 1 to 4 components from 11 components for visualization for each sequence at most. With Plotly's powerful interactive charts, you can scale, rotate curve graphs and view information about each coordinate point.
+
+### Input
+We offer three input methods: file upload, text input and NCBI Accession. Each input method should meet the above requirements.
+
+#### File Upload  
+
+FASTA and GenBank files are allowed to be uploaded.  
+*Note*: The annotations in the GenBank file will be automatically ignored and it only retains the nucleic acid sequence information.
+
+![Z-curve Plotter File Upload](./images/webserver/plotter/plotter_file_upload.png)
+
+#### FASTA Text Input
+
+Upload the nucleic acid sequence in FASTA text format.  
+*Note*: Illegal characters in the sequence will be regarded as "N" and count it into the total length of the sequence.
+
+![Z-curve Plotter Text Input](./images/webserver/plotter/plotter_fasta_text_input.png)
+
+#### NCBI Accession
+
+Enter a legal NCBI Nucleotide accession number (e.g. KP205272.1), and the program can automatically download the sequence from the public database.
+
+![Z-curve Plotter NCBI Accession Input](./images/webserver/plotter/plotter_acc_input.png)
+
+### Settings
+Z-curve Plotter manages the input sequences in a card-like manner and enables customized settings for all items conveniently.
+
+#### 2D Mode
+The card displays basic information such as the name, length, and GC content of the sequence, as well as options such as the plot start point, plot end point, smoothing window size, and curve types.
+
+- **Start**  
+Plot start point. Its index starting from 0 like most programming language, and should not be larger than the length of the sequence.
+
+- **End**  
+Plot end point. Its value requirement is the same as that of **Start**.
+
+- **Window**  
+The window size of mean smoothing. The range of values is [0, 1000].
+
+- **2D Curve Types**  
+Optional curve types, up to 4 types can be selected for each sequence. The definition of each type can be found [here](./introduction.md#main-functions).
+
+![Z-curve Plotter Settings](./images/webserver/plotter/plotter_setting_2d.png)
+
+#### 3D Mode
+The information displayed on this card is basically the same as that in the 2D mode, but the option of the curve type is limited to the three coordinate axes of the 3D chart.
+
+- **3D Curve Types**  
+Any 3 of the 11 components can be selected as the X-axis component, Y-axis component and Z-axis component, but do not choose the same components as different axes, because the result would be trivial.
+
+![Z-curve Plotter Settings](./images/webserver/plotter/plotter_setting_3d.png)
+
+### Visualization
+The visualized results can be saved as PNG images via Plotly, or the original data can be saved as JSON through the download button below.  
+
+#### 2D Mode
+![Z-curve 2D Visualization](./images/webserver/plotter/plotter_visual_2d.png)
+#### 3D Mode
+![Z-curve 3D Visualization](./images/webserver/plotter/plotter_visual_3d.png)
 
 ## Z-curve Encoder
 
@@ -54,8 +114,21 @@ Sets the hyperparameters for the phase-dependent K-nucleotide Z-curve transforma
 
 Data preprocessing options, available using the API provided by Sci-kit Learn. When checked, the output will overwrite the original encoding result and output the corresponding sklearn object. For example, if the standardization option is checked, an additional `[job_id]_std_scaler.joblib` will appear in the output.
 
-- Standardization  
+- **Standardization**  
   To extract the features of standardizing operations, will call `sklearn.preprocessing.StandardScaler`
+
+- **Normalization**  
+  To extract the features of normalizing operations, will call `sklearn.preprocessing.MinMaxScaler`
+
+- **Principal Component Analysis (PCA)**  
+  Perform principal component analysis for dimensionality reduction on the data.  
+  - Components  
+    The number of components retained in the data after dimensionality reduction.  
+
+- **K-means Clustering**
+  Conduct unsupervised cluster analysis on the original data or preprocessed data.
+  - Clusters  
+    Specify the number of clusters.
 
 ![Z-curve Preprocessing](./images/webserver/encoder/encoder_preprocessing.png)
 

@@ -8,6 +8,10 @@ python -m pip install --upgrade zcurvepy
 
 python -m pip uninstall zcurvepy
 ```
+Starting from 1.5.11, the return value types of some frequently used API functions have been modified from Python list to Numpy ndarray. Therefore, please install Numpy 1.x before compiling and installing.
+```bash
+python -m pip install numpy>=1.21,<2.0
+```
 ### Python Requirements
 Python 3.7, 3.8, 3.9, 3.10 and 3.11 are supported. We currently recommend using Python 3.9.6 (https://www.python.org/downloads/release/python-396/)
 ### Operating System
