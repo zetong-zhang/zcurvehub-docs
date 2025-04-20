@@ -596,7 +596,7 @@ $S_n({\rm P}) = a_n^2 + t_n^2 + c_n^2 + g_n^2, n=1,2,3...,N$
 
 and denote that of the rest of the sequence by $S({\rm Q})$, such that we have
 
-$dS_n({\rm P}) = S_n({\rm P}) + S_n({\rm Q}) - S({\rm P + Q}), n=1,2,3...,N$
+$dS_n({\rm P}) = w_1S_n({\rm P}) + w_2S_n({\rm Q}) - S(w_1{\rm P} + w_2{\rm Q}), n=1,2,3...,N$
 
 the max point of the $dS_n({\rm P})$ is the segment point in a round of the recursive algorithm.
 
@@ -652,7 +652,7 @@ $S_n({\rm P}) = (a_n + g_n)^2 + (c_n + t_n)^2, n=1,2,3...,N$
 
 and denote that of the rest of the sequence by $S({\rm Q})$, such that we have
 
-$dS_n({\rm P}) = S_n({\rm P}) + S_n({\rm Q}) - S({\rm P + Q}), n=1,2,3...,N$
+$dS_n({\rm P}) = w_1S_n({\rm P}) + w_2S_n({\rm Q}) - S(w_1{\rm P} + w_2{\rm Q}), n=1,2,3...,N$
 
 the max point of the $dS_n({\rm P})$ is the segment point in a round of the recursive algorithm.
 
@@ -708,7 +708,7 @@ $S_n({\rm P}) = (a_n + c_n)^2 + (g_n + t_n)^2, n=1,2,3...,N$
 
 and denote that of the rest of the sequence by $S({\rm Q})$, such that we have
 
-$dS_n({\rm P}) = S_n({\rm P}) + S_n({\rm Q}) - S({\rm P + Q}), n=1,2,3...,N$
+$dS_n({\rm P}) = w_1S_n({\rm P}) + w_2S_n({\rm Q}) - S(w_1{\rm P} + w_2{\rm Q}), n=1,2,3...,N$
 
 the max point of the $dS_n({\rm P})$ is the segment point in a round of the recursive algorithm.
 
@@ -763,7 +763,7 @@ $S_n({\rm P}) = (a_n + t_n)^2 + (c_n + g_n)^2, n=1,2,3...,N$
 
 and denote that of the rest of the sequence by $S({\rm Q})$, such that we have
 
-$dS_n({\rm P}) = S_n({\rm P}) + S_n({\rm Q}) - S({\rm P + Q}), n=1,2,3...,N$
+$dS_n({\rm P}) = w_1S_n({\rm P}) + w_2S_n({\rm Q}) - S(w_1{\rm P} + w_2{\rm Q}), n=1,2,3...,N$
 
 the max point of the $dS_n({\rm P})$ is the segment point in a round of the recursive algorithm.
 
@@ -818,7 +818,7 @@ $S_n({\rm P}) = a_n^2 + t_n^2, n=1,2,3...,N$
 
 and denote that of the rest of the sequence by $S({\rm Q})$, such that we have
 
-$dS_n({\rm P}) = S_n({\rm P}) + S_n({\rm Q}) - S({\rm P + Q}), n=1,2,3...,N$
+$dS_n({\rm P}) = w_1S_n({\rm P}) + w_2S_n({\rm Q}) - S(w_1{\rm P} + w_2{\rm Q}), n=1,2,3...,N$
 
 the max point of the $dS_n({\rm P})$ is the segment point in a round of the recursive algorithm.
 
@@ -873,7 +873,7 @@ $S_n({\rm P}) = g_n^2 + c_n^2, n=1,2,3...,N$
 
 and denote that of the rest of the sequence by $S({\rm Q})$, such that we have
 
-$dS_n({\rm P}) = S_n({\rm P}) + S_n({\rm Q}) - S({\rm P + Q}), n=1,2,3...,N$
+$dS_n({\rm P}) = w_1S_n({\rm P}) + w_2S_n({\rm Q}) - S(w_1{\rm P} + w_2{\rm Q}), n=1,2,3...,N$
 
 the max point of the $dS_n({\rm P})$ is the segment point in a round of the recursive algorithm.
 
@@ -928,7 +928,7 @@ $S_n({\rm P}) = [p_n({\rm CpG})]^2 + [1 - p_n({\rm CpG})]^2, n=1,2,3...,N$
 
 and denote that of the rest of the sequence by $S({\rm Q})$, such that we have
 
-$dS_n({\rm P}) = S_n({\rm P}) + S_n({\rm Q}) - S({\rm P + Q}), n=1,2,3...,N$
+$dS_n({\rm P}) = w_1S_n({\rm P}) + w_2S_n({\rm Q}) - S(w_1{\rm P} + w_2{\rm Q}), n=1,2,3...,N$
 
 the max point of the $dS_n({\rm P})$ is the segment point in a round of the recursive algorithm.
 

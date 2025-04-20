@@ -1,5 +1,5 @@
 # Web Service
-ZCurveHub is an integrated platform for genomic Z-curve feature analysis based on ZCurvePy, and it is freely available on https://tubic.tju.edu.cn/zcurve/.
+ZCurveHub is an integrated platform for genomic Z-curve feature analysis based on ZCurvePy, and it is freely available on http://tubic.tju.edu.cn/zcurve/.
 
 ## Z-curve Plotter
 Z-curve Plotter allows users to upload 1 to 3 nucleotide sequences and select 1 to 4 components from 11 components for visualization for each sequence at most. With Plotly's powerful interactive charts, you can scale, rotate curve graphs and view information about each coordinate point.
@@ -156,7 +156,7 @@ Our program supports the online acquisition of sequences from NCBI, but please b
 ### Options
 Select and set the mode of segmentation and the parameters of the algorithm. The Z-curve segmentation method was based on genome order index, and it is a binary iterative algorithm. The segment points in each iteration are calculated by the following formula:  
 
-$n_{\rm seg}={\rm argmax}\{S({\rm P}_n) + S({\rm Q}_n) - S({\rm P}_n + {\rm Q}_n)\},n=1,2,3...,N$
+$n_{\rm seg}={\rm argmax}\{w_1S({\rm P}_n) + w_2S({\rm Q}_n) - S(w_1{\rm P}_n + w_2{\rm Q}_n)\},n=1,2,3...,N$
 
 In the above formula, P represents the left subsequence at point $N$ of a dna sequence of length $n$, and Q represents the right subsequence. 
 - **Mode**  
