@@ -20,7 +20,7 @@ Currently, Dr. Gao is a Faculty Member of **Faculty Opinions** (formerly F1000Pr
 
 Dr. Lin is a dedicated researcher and educator in the fields of **Biophysics**, **Computational Biology**, and **Data Science**. Currently serving as an Associate Professor at Tianjin University’s School of Science, he combines cutting-edge research with a passion for teaching interdisciplinary courses such as *Computational Physics and Scientific Computing*, *Data Analysis Thinking*, *Physics Experiments and Error Theory*, *University Physics*, and *Fundamentals of Cloud Computing*.
 
-His research contributions, published in high-impact SCI journals, reflect exceptional scholarly influence, with an average citation count exceeding 90 per paper and an h-index of 10 over the past five years. Dr. Lin’s work bridges theoretical models and computational tools to address complex biological challenges, emphasizing innovation in bioinformatic data analysis and systems biology.
+His research contributions, published in high-impact SCI journals, reflect exceptional scholarly influence, with an average citation count exceeding 90 per paper and an h-index of 11 over the past five years (2024). Dr. Lin’s work bridges theoretical models and computational tools to address complex biological challenges, emphasizing innovation in bioinformatic data analysis and systems biology.
 
 Actively engaged in the academic community, he holds memberships in prominent professional organizations, including the Functional Genomics Informatics and Systems Biology Branch of the Chinese Society for Cell Biology and the Biomedical Data Mining and Computing Committee of the China Society for Bioinformatics. Dr. Lin is committed to advancing scientific knowledge through collaborative research, mentorship, and the integration of computational methodologies into biological and physical sciences.
 
@@ -34,5 +34,8 @@ Dr. Luo is an accomplished biophysicist and bioinformatics researcher currently 
 
 His research program focuses on three key areas: (1) Bioinformatics algorithm development for microbial genome analysis; (2) Essential gene characterization and prediction systems; (3)Construction of specialized biological databases.Notable achievements include leading the **National Natural Science Foundation of China Youth Program** project *"Feature Analysis and Prediction of Human Essential Genes Based on Essential Gene Databases"*, recognized for its innovative approach to gene essentiality studies. His work has been honored with the **Excellent Paper Award at the National Postdoctoral Forum on AI Development and Applications**.
 
-## Zhang Zetong
+## Zhang Ze-Tong
+
+**Graduate Student, School of Science, Tianjin University**  
+
 A student from Tianjin University.

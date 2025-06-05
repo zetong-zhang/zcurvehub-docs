@@ -10,27 +10,27 @@ We listed a table here corresponding to that in the **Introduction** to better h
 |GC_disparity         |GC_prime_curve      |GC_dS_curve         |GC_order_index     |
 |**\*\*\***           |CpG_prime_curve     |CpG_dS_curve        |CpG_order_index    |
 
-**\*** &nbsp;&nbsp;&nbsp; The order index was treated as a feature of the sequence for machine learning in earlier studies, so it is integrated under the ZCurveEncoder. The other APIs are integrated under ZCurvePlotter.  
-**\*\*** &nbsp;&nbsp;&nbsp;Z profile curves in 3D form are generally not used for visualization, but their parameters are used for gene starting point prediction, so we only provide it in "profile" mode of BatchZCurvePlotter to batch the dataset. You can use bulk interfaces (x_prime_curve, y_prime_curve, z_prime_curve) to implement it in 3D form as well.  
+**\*** &nbsp;&nbsp;&nbsp; The order index was treated as a feature of the sequence for machine learning in earlier studies, so it is integrated under the ZcurveEncoder. The other APIs are integrated under ZcurvePlotter.  
+**\*\*** &nbsp;&nbsp;&nbsp;Z profile curves in 3D form are generally not used for visualization, but their parameters are used for gene starting point prediction, so we only provide it in "profile" mode of BatchZcurvePlotter to batch the dataset. You can use bulk interfaces (x_prime_curve, y_prime_curve, z_prime_curve) to implement it in 3D form as well.  
 **\*\*\*** &nbsp;The geometry of the CpG-disparity curve is not obvious, so we do not provide a standard API. Readers may implement and explore its features on their own.
 
-## ZCurvePy
-This is the Python package `__init__` module of released ZCurvePy package. All the C/C++ apis can be called through this module. If you don't want to import additional third-party modules (e.g. modules from scikit-learn) or APIs written in pure Python provided by ZCurvePy (e.g. [ZCurveBuilder](#ZCurveBuilder)), use `import _ZCurvePy` instead of `import ZCurvePy`.
+## ZcurvePy
+This is the Python package `__init__` module of released ZcurvePy package. All the C/C++ apis can be called through this module. If you don't want to import additional third-party modules (e.g. modules from scikit-learn) or APIs written in pure Python provided by ZcurvePy (e.g. [ZcurveBuilder](#ZcurveBuilder)), use `import _ZcurvePy` instead of `import ZcurvePy`.
 
-### ZCurvePlotter
-A simple API for plotting a nucleotide sequence to Z-curve or do segmentation based on order index. Multi-thread is not supported by this API. If you want to plot Z-curve for a large dataset using multi-thread, use [BatchZCurvePlotter](#batchzcurveplotter) instead. This API only returns coordinate information and provides no graphical operations. If you want visual curves, use commandline tools or program it by yourself using visualization library like [Matplotlib](https://matplotlib.org/) and [Plotly](https://plotly.com/python/).
+### ZcurvePlotter
+A simple API for plotting a nucleotide sequence to Z-curve or do segmentation based on order index. Multi-thread is not supported by this API. If you want to plot Z-curve for a large dataset using multi-thread, use [BatchZcurvePlotter](#batchzcurveplotter) instead. This API only returns coordinate information and provides no graphical operations. If you want visual curves, use commandline tools or program it by yourself using visualization library like [Matplotlib](https://matplotlib.org/) and [Plotly](https://plotly.com/python/).
 
-#### `ZCurvePlotter.__init__`
-`__init__` method  of _ZCurvePy.ZCurvePlotter  
+#### `ZcurvePlotter.__init__`
+`__init__` method  of _ZcurvePy.ZcurvePlotter  
 **Args:**  
 - seq_or_record:   
 Object that stores information of nucleic sequence. str, Bio.Seq.Seq, Bio.SeqRecord.SeqRecord and many other types are supported.
 
 **Returns:**
 - plotter (object):  
-  _ZCurvePy.ZCurvePlotter
+  _ZcurvePy.ZcurvePlotter
 
-#### `ZCurvePlotter.z_curve`
+#### `ZcurvePlotter.z_curve`
 Convert a DNA sequence or RNA sequence to Z-curve.  
 
 **Background**  
@@ -38,7 +38,7 @@ Z-curve theory is a geometrical approach to genome analysis. The Z-curve is a th
 given the other.The Z-curve, therefore, contains all the information that the corresponding DNA sequence carries.
 
 **Definition**  
-Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $x_n = (A_n + G_n) - (C_n + T_n)$  
 $y_n = (A_n + C_n) - (G_n + T_n), n=1,2,3 ...,N$  
@@ -55,11 +55,11 @@ Genome visualization; Replication origins prediction; Machine learning
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 x, y, z = plotter.z_curve(window=10000, return_n=False)
 # n, x, y, z = plotter.z_curve(window=10000)
 
@@ -89,11 +89,11 @@ plt.show()
 
 ![Z-curve of Escherichia coli](./images/pythonapi/e_coli_z_curve.jpg)
 
-#### `ZCurvePlotter.RY_disparity`
+#### `ZcurvePlotter.RY_disparity`
 Returns the x values of the Z-curve (RY-disparity).
 
 **Definition**  
-Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $x_n = (A_n + G_n) - (C_n + T_n), n=1,2,3 ...,N$  
 
@@ -105,11 +105,11 @@ Genome visualization; Replication origins prediction; Machine learning
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, x = plotter.RY_disparity(window=100)
 # x = plotter.RY_disparity(window=100, return_n=False)
 plt.plot(n, x)
@@ -130,11 +130,11 @@ plt.show()
   The x values of the Z-curve.
 
 ![Disparity curves of Escherichia coli](./images/pythonapi/e_coli_disparity.png)
-#### `ZCurvePlotter.MK_disparity`
+#### `ZcurvePlotter.MK_disparity`
 Returns the y values of the Z-curve (MK-disparity).
 
 **Definition**  
-Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $y_n = (A_n + C_n) - (G_n + T_n), n=1,2,3 ...,N$  
 
@@ -146,11 +146,11 @@ Genome visualization; Replication origins prediction; Machine learning
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, y = plotter.MK_disparity(window=100)
 # y = plotter.MK_disparity(window=100, return_n=False)
 plt.plot(n, y)
@@ -158,7 +158,7 @@ plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel('MK Disparity', labelpad=10)
 plt.show()
 ```
-*For the visual displaying example, please see ZCurvePlotter.RY_disparity*  
+*For the visual displaying example, please see ZcurvePlotter.RY_disparity*  
 **Args:**  
   - window (int):  
   Window size used by mean-smoothing method. If a value <= 0 is given, do nothing and return the original curve data. (Default: 0)
@@ -171,11 +171,11 @@ plt.show()
   - y (ndarray):  
   The y values axis of the Z-curve.
 
-#### `ZCurvePlotter.WS_disparity`
+#### `ZcurvePlotter.WS_disparity`
 Returns the z values of the Z-curve (WS-disparity).
 
 **Definition**  
-Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $z_n = (A_n + T_n) - (G_n + C_n), n=1,2,3 ...,N$  
 
@@ -187,11 +187,11 @@ Genome visualization; Replication origins prediction; Machine learning
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, z = plotter.WS_disparity(window=100)
 # z = plotter.WS_disparity(window=100, return_n=False)
 plt.plot(n, z)
@@ -212,11 +212,11 @@ plt.show()
   - z (ndarray):  
   The z values axis of the Z-curve.
 
-#### `ZCurvePlotter.AT_disparity`
-Returns AT-disparity (equivalent to AT-skew in some cases).
+#### `ZcurvePlotter.AT_disparity`
+Returns AT-disparity.
 
 **Definition**  
-Let $A_n$ and $T_n$ be the count of A and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $A_n$ and $T_n$ be the count of A and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $d_{\rm AT}(n) = A_n - T_n, n=1,2,3 ...,N$  
 
@@ -228,11 +228,11 @@ Genome visualization
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, d = plotter.AT_disparity(window=100)
 # d = plotter.AT_disparity(window=100, return_n=False)
 plt.plot(n, d)
@@ -240,7 +240,7 @@ plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel('AT Disparity', labelpad=10)
 plt.show()
 ```
-*For the visual displaying example, please see ZCurvePlotter.RY_disparity*  
+*For the visual displaying example, please see ZcurvePlotter.RY_disparity*  
 **Args:**  
   - window (int):  
   Window size used by mean-smoothing method. If a value <= 0 is given, do nothing and return the original curve data. (Default: 0)
@@ -253,12 +253,12 @@ plt.show()
   - d (ndarray):  
   The AT-disparity values.
 
-#### `ZCurvePlotter.GC_disparity`
+#### `ZcurvePlotter.GC_disparity`
 
-Returns GC-disparity (equivalent to GC-skew in some cases).
+Returns GC-disparity.
 
 **Definition**  
-Let $G_n$ and $C_n$ be the count of A and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $G_n$ and $C_n$ be the count of A and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $d_{\rm GC}(n) = G_n - C_n, n=1,2,3 ...,N$  
 
@@ -270,19 +270,19 @@ Genome visualization
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
-n, f = plotter.GC_disparity(window=100)
-# f = plotter.GC_disparity(window=100, return_n=False)
+plotter = ZcurvePlotter(record)
+n, f = plotter.GC_disparity(window=1000)
+# f = plotter.GC_disparity(window=1000, return_n=False)
 plt.plot(n, f)
 plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel('GC Disparity', labelpad=10)
 plt.show()
 ```
-*For the visual displaying example, please see ZCurvePlotter.RY_disparity*  
+*For the visual displaying example, please see ZcurvePlotter.RY_disparity*  
 **Args:**  
   - window (int):  
   Window size used by mean-smoothing method. If a value <= 0 is given, do nothing and return the original curve data. (Default: 0)
@@ -295,7 +295,113 @@ plt.show()
   - f (ndarray):  
   The GC-disparity values.
 
-#### `ZCurvePlotter.x_prime_curve`
+#### `ZcurvePlotter.AT_skew`
+Returns sliding window calculated AT-skew.
+
+**Definition**  
+Let $A^k_n$ and $T^k_n$ be the count of A and T of a subsequence consisting of $k$ nucleotides (window size) at position $n$ of a DNA, s.t.
+
+$skew_{\rm AT}(n,k) = (A^k_n - T^k_n) / (A^k_n + T^k_n), n=1,2,3 ...,N$  
+
+**Application Scene**  
+Genome visualization
+
+**Usage Example**
+```python
+from Bio import SeqIO
+from ZcurvePy import ZcurvePlotter
+import matplotlib.pyplot as plt
+
+record = SeqIO.read("e_coli.fa", "fasta")
+plotter = ZcurvePlotter(record)
+n, a = plotter.AT_skew(window=100)
+# a = plotter.AT_skew(window=100, return_n=False)
+plt.plot(n, a)
+plt.xlabel('n (bp)', labelpad=10)
+plt.ylabel('AT Skew', labelpad=10)
+plt.show()
+```
+
+**Args:**  
+  - window (int):  
+  Window size (>= 50) used by sliding window method. (Default: 100)
+  - return_n (bool):  
+  Return the sequence length axis or not. (Default: True)
+
+**Returns:**  
+  - n (ndarray):  
+  The sequence length axis.
+  - a (ndarray):  
+  The AT-skew values.
+
+#### `ZcurvePlotter.GC_skew`
+Returns sliding window calculated GC-skew.
+
+**Definition**  
+Let $G^k_n$ and $C^k_n$ be the count of G and C of a subsequence consisting of $k$ nucleotides (window size) at position $n$ of a DNA, s.t.
+
+$skew_{\rm GC}(n,k) = (G^k_n - C^k_n) / (G^k_n + C^k_n), n=1,2,3 ...,N$  
+
+**Application Scene**  
+Genome visualization
+
+**Usage Example**
+```python
+from Bio import SeqIO
+from ZcurvePy import ZcurvePlotter
+import matplotlib.pyplot as plt
+
+record = SeqIO.read("e_coli.fa", "fasta")
+plotter = ZcurvePlotter(record)
+n, g = plotter.GC_skew(window=1000)
+# g = plotter.GC_skew(window=1000, return_n=False)
+plt.plot(n, g)
+plt.xlabel('n (bp)', labelpad=10)
+plt.ylabel('GC Skew', labelpad=10)
+plt.show()
+```
+
+**Args:**  
+  - window (int):  
+  Window size (>= 50) used by sliding window method. (Default: 100)
+  - return_n (bool):  
+  Return the sequence length axis or not. (Default: True)
+
+**Returns:**  
+  - n (ndarray):  
+  The sequence length axis.
+  - g (ndarray):  
+  The GC-skew values.
+
+#### `ZcurvePlotter.AT_fraction`
+Returns sliding window calculated AT fraction.
+
+**Definition**  
+Let $A^k_n$, $T^k_n$, $G^k_n$ and $C^k_n$ be the count of G and C of a subsequence consisting of $k$ nucleotides (window size) at position $n$ of a DNA, s.t.
+
+$fraction_{GC}(n, k) = (A^k_n + T^k_n) / (A^k_n + T^k_n + G^k_n + C^k_n), n=1,2,3 ...,N$
+
+**Application Scene**  
+Genome visualization
+
+**Usage Example**
+```python
+from Bio import SeqIO
+from ZcurvePy import ZcurvePlotter
+import matplotlib.pyplot as plt
+
+record = SeqIO.read("e_coli.fa", "fasta")
+plotter = ZcurvePlotter(record)
+n, g = plotter.GC_fraction(window=1000)
+# g = plotter.GC_fraction(window=1000, return_n=False)
+plt.plot(n, g)
+plt.xlabel('n (bp)', labelpad=10)
+plt.ylabel('GC Skew', labelpad=10)
+plt.show()
+```
+
+
+#### `ZcurvePlotter.x_prime_curve`
 
 Calculate x' values and the slope 'k'.
 
@@ -303,7 +409,7 @@ Calculate x' values and the slope 'k'.
 The different patterns of the species-specific, conserved nucleotide distribution are helpful to extract some recognition variables to identify gene starts. In prokaryotic genomes, a major jump in xn occurs in the region of −14 to −7 for the true start codons, but not for the non-coding ORFs. It is likely caused by purine-rich SD sequence.Therefore the features of mononucleotide frequencies near the true start codons are notably different from those of the upstream and downstream false starts.
 
 **Definition**  
-Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $x_n = (A_n + G_n) - (C_n + T_n), n=1,2,3 ...,N$
 
@@ -317,11 +423,11 @@ Genome visualization; Gene start sites prediction
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, xp, k = plotter.x_prime_curve(window=100)
 # xp, k = plotter.x_prime_curve(window=100, return_n=False)
 plt.plot(n, xp)
@@ -345,12 +451,12 @@ plt.show()
   The slope value 'k'.
 
 ![L lactis Gene Start](./images/pythonapi/l_lactis_gene_start.png)  
-#### `ZCurvePlotter.y_prime_curve`
+#### `ZcurvePlotter.y_prime_curve`
 
 Calculate y' values and the slope 'k'.
 
 **Definition**  
-Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $y_n = (A_n + C_n) - (G_n + T_n), n=1,2,3 ...,N$
 
@@ -364,11 +470,11 @@ Genome visualization; Gene start sites prediction
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, yp, k = plotter.y_prime_curve(window=100)
 # yp, k = plotter.y_prime_curve(window=100, return_n=False)
 plt.plot(n, yp)
@@ -376,7 +482,7 @@ plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel("y'", labelpad=10)
 plt.show()
 ```
-*For the visual displaying example, please see ZCurvePlotter.x_prime_curve*  
+*For the visual displaying example, please see ZcurvePlotter.x_prime_curve*  
 
 **Args:**  
 - window (int):  
@@ -392,7 +498,7 @@ plt.show()
 - k (float):  
   The slope value 'k'.
 
-#### `ZCurvePlotter.z_prime_curve`
+#### `ZcurvePlotter.z_prime_curve`
 
 Calculate z' values and the slope 'k'.
 
@@ -400,7 +506,7 @@ Calculate z' values and the slope 'k'.
 The GC profile is a windowless technique to calculate the G+C content of genomic DNA sequences as well as visualize isolate structures, which is rich of G+C. By this method, the G content can be calculated at different 'resolution'.In an extreme case, the G content may be computed at a specific point, rather than in a window of finite size. This is particularly useful to analyze the fine variation of base composition along genomic sequences.
 
 **Definition**  
-Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $A_n$, $G_n$, $C_n$ and $T_n$ be the count of A, G, C and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $z_n = (A_n + T_n) - (G_n + C_n), n=1,2,3 ...,N$
 
@@ -414,11 +520,11 @@ Genome visualization; Gene start sites prediction
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, zp, k = plotter.z_prime_curve(window=100)
 # zp, k = plotter.z_prime_curve(window=100, return_n=False)
 plt.plot(n, zp)
@@ -442,12 +548,12 @@ plt.show()
   The slope value 'k'.  
 
 ![z' curve of human chr15](./images/pythonapi/human_zp.png)
-#### `ZCurvePlotter.AT_prime_curve`
+#### `ZcurvePlotter.AT_prime_curve`
 
 Calculate d'AT values for AT-disparity.
 
 **Definition**  
-Let $A_n$ and $T_n$ be the count of A and T of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $A_n$ and $T_n$ be the count of A and T of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $d_{\rm AT}(n) = A_n - T_n, n=1,2,3 ...,N$
 
@@ -461,11 +567,11 @@ Genome visualization
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, dp, k = plotter.AT_prime_curve(window=100)
 # dp, k = plotter.AT_prime_curve(window=100, return_n=False)
 plt.plot(n, dp)
@@ -473,7 +579,7 @@ plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel("d'AT", labelpad=10)
 plt.show()
 ```
-*For the visual displaying example, please see ZCurvePlotter.x_prime_curve*  
+*For the visual displaying example, please see ZcurvePlotter.x_prime_curve*  
 
 **Args:**  
 - window (int):  
@@ -489,12 +595,12 @@ plt.show()
 - k (float):  
   The slope value 'k'.
 
-#### `ZCurvePlotter.GC_prime_curve`
+#### `ZcurvePlotter.GC_prime_curve`
 
 Calculate d'GC values for GC-disparity.
 
 **Definition**  
-Let $G_n$ and $C_n$ be the count of G and C of a subsequence consisting of the first n nucleotides of a DNA, s.t.
+Let $G_n$ and $C_n$ be the count of G and C of a subsequence consisting of the first $n$ nucleotides of a DNA, s.t.
 
 $d_{\rm GC}(n) = G_n - C_n, n=1,2,3 ...,N$
 
@@ -508,11 +614,11 @@ Genome visualization
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, fp, k = plotter.GC_prime_curve(window=100)
 # fp, k = plotter.GC_prime_curve(window=100, return_n=False)
 plt.plot(n, fp)
@@ -520,7 +626,7 @@ plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel("d'GC", labelpad=10)
 plt.show()
 ```
-*For the visual displaying example, please see ZCurvePlotter.x_prime_curve*  
+*For the visual displaying example, please see ZcurvePlotter.x_prime_curve*  
 
 **Args:**  
 - window (int):  
@@ -536,7 +642,7 @@ plt.show()
 - k (float):  
   The slope value 'k'.
 
-#### `ZCurvePlotter.CpG_prime_curve`
+#### `ZcurvePlotter.CpG_prime_curve`
 
 Calculate z' values for CpG-profile.
 
@@ -555,11 +661,11 @@ Genome visualization
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, zp, k = plotter.CpG_prime_curve(window=100)
 # zp, k = plotter.CpG_prime_curve(window=100, return_n=False)
 plt.plot(n, zp)
@@ -567,7 +673,7 @@ plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel("CpG-profile", labelpad=10)
 plt.show()
 ```  
-*For the visual displaying example, please see ZCurvePlotter.z_prime_curve*  
+*For the visual displaying example, please see ZcurvePlotter.z_prime_curve*  
 **Args:**  
 - window (int):  
   Window size used by mean-smoothing method. If a value <= 0 is given, do nothing and return the original curve data. (Default: 0)
@@ -583,14 +689,14 @@ plt.show()
   The slope value 'k'.  
 
 ![CpG profile of human chr15](./images/pythonapi/human_cpg_island.png)
-#### `ZCurvePlotter.genome_dS_curve`
+#### `ZcurvePlotter.genome_dS_curve`
 Return dS(P) curve and its max point and max value. Segmentation algorithm for DNA sequences.  
 
 **Background**  
 Based on the quadratic divergence,the segmentation algorithm to partition a given genome or DNA sequence into compositionally distinct domains is put forward. The algorithm has been applied to segment human chromosome sequences, and the boundaries of isochores for each chromosome were obtained. Compared with the results obtained by using the entropic segmentation algorithm based on the Jensen-Shannon divergence, both algorithms resulted in all identical coordinates of segmentation points. An explanation of the equivalence of the two segmentation algorithms is presented. The new algorithm has a number of advantages. Particularly, it is much simpler and faster than the entropy-based method. Therefore, the new algorithm is more suitable for analyzing long genome sequences, such as human and other newly sequenced eukaryotic genome sequences.
 
 **Definition**  
-Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first n nucleotides of a DNA, such that  
+Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first $n$ nucleotides of a DNA, such that  
 
 $S_n({\rm P}) = a_n^2 + t_n^2 + c_n^2 + g_n^2, n=1,2,3...,N$
 
@@ -608,11 +714,11 @@ Genome segmentation
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, sp, mp, mv = plotter.genome_dS_curve(window=10)
 # sp, mp, mv = plotter.genome_dS_curve(return_n=False)
 # mp, mv = plotter.genome_dS_curve(only_m=True)
@@ -642,11 +748,11 @@ plt.show()
   The max value of S(P).  
 
 ![Segmentation of Z-curve](./images/pythonapi/e_coli_segment.png)
-#### `ZCurvePlotter.RY_dS_curve`
+#### `ZcurvePlotter.RY_dS_curve`
 Return dS(P) curve for RY disparity and its max point and max value. Segmentation algorithm for DNA sequences.
 
 **Definition**  
-Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first n nucleotides of a DNA, such that  
+Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first $n$ nucleotides of a DNA, such that  
 
 $S_n({\rm P}) = (a_n + g_n)^2 + (c_n + t_n)^2, n=1,2,3...,N$
 
@@ -664,11 +770,11 @@ Genome segmentation
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, sp, mp, mv = plotter.RY_dS_curve(window=10)
 # sp, mp, mv = plotter.RY_dS_curve(return_n=False)
 # mp, mv = plotter.RY_dS_curve(only_m=True)
@@ -698,11 +804,11 @@ plt.show()
   The max value of S(P).
 
 ![RY profile of human mtDNA](./images/pythonapi/human_mt_xp.png)
-#### `ZCurvePlotter.MK_dS_curve`
+#### `ZcurvePlotter.MK_dS_curve`
 Return dS(P) curve for MK disparity and its max point and max value. Segmentation algorithm for DNA sequences.
 
 **Definition**  
-Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first n nucleotides of a DNA, such that  
+Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first $n$ nucleotides of a DNA, such that  
 
 $S_n({\rm P}) = (a_n + c_n)^2 + (g_n + t_n)^2, n=1,2,3...,N$
 
@@ -720,11 +826,11 @@ Genome segmentation
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, sp, mp, mv = plotter.MK_dS_curve(window=10)
 # sp, mp, mv = plotter.MK_dS_curve(return_n=False)
 # mp, mv = plotter.MK_dS_curve(only_m=True)
@@ -734,7 +840,7 @@ plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel("dS(P)", labelpad=10)
 plt.show()
 ```  
-*The segmented pattern of bacteria MK disparity is the same as Z-curve, see ZCurvePlotter.genome_order_index*  
+*The segmented pattern of bacteria MK disparity is the same as Z-curve, see ZcurvePlotter.genome_order_index*  
 **Args:**  
 - window (int):  
   Window size used by mean-smoothing method. If a value <= 0 is given, do nothing and return the original curve data. (Default: 0)
@@ -753,11 +859,11 @@ plt.show()
 - mv (float):  
   The max value of S(P).
 
-#### `ZCurvePlotter.WS_dS_curve`
+#### `ZcurvePlotter.WS_dS_curve`
 Return dS(P) curve for WS disparity and its max point and max value. Segmentation algorithm for DNA sequences.
 
 **Definition**  
-Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first n nucleotides of a DNA, such that  
+Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first $n$ nucleotides of a DNA, such that  
 
 $S_n({\rm P}) = (a_n + t_n)^2 + (c_n + g_n)^2, n=1,2,3...,N$
 
@@ -775,11 +881,11 @@ Genome segmentation
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, sp, mp, mv = plotter.WS_dS_curve(window=10)
 # sp, mp, mv = plotter.WS_dS_curve(return_n=False)
 # mp, mv = plotter.WS_dS_curve(only_m=True)
@@ -808,11 +914,11 @@ plt.show()
 - mv (float):  
   The max value of S(P).
 
-#### `ZCurvePlotter.AT_dS_curve`
+#### `ZcurvePlotter.AT_dS_curve`
 Return dS(P) curve for AT disparity and its max point and max value. Segmentation algorithm for DNA sequences.
 
 **Definition**  
-Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first n nucleotides of a DNA, such that  
+Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first $n$ nucleotides of a DNA, such that  
 
 $S_n({\rm P}) = a_n^2 + t_n^2, n=1,2,3...,N$
 
@@ -830,11 +936,11 @@ Genome segmentation
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, sp, mp, mv = plotter.AT_dS_curve(window=10)
 # sp, mp, mv = plotter.AT_dS_curve(return_n=False)
 # mp, mv = plotter.AT_dS_curve(only_m=True)
@@ -863,11 +969,11 @@ plt.show()
 - mv (float):  
   The max value of S(P).
 
-#### `ZCurvePlotter.GC_dS_curve`
+#### `ZcurvePlotter.GC_dS_curve`
 Return dS(P) curve for GC disparity and its max point and max value. Segmentation algorithm for DNA sequences.
 
 **Definition**  
-Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first n nucleotides of a DNA, such that  
+Let $a_n$, $g_n$, $c_n$ and $t_n$ be the frequency of A, G, C, T of a subsequence consisting of the first $n$ nucleotides of a DNA, such that  
 
 $S_n({\rm P}) = g_n^2 + c_n^2, n=1,2,3...,N$
 
@@ -885,11 +991,11 @@ Genome segmentation
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, sp, mp, mv = plotter.GC_dS_curve(window=10)
 # sp, mp, mv = plotter.GC_dS_curve(return_n=False)
 # mp, mv = plotter.GC_dS_curve(only_m=True)
@@ -899,7 +1005,7 @@ plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel("dS(P)", labelpad=10)
 plt.show()
 ```
-*The segmented pattern of bacteria GC disparity is the same as RY disparity, see ZCurvePlotter.RY_dS_curve*  
+*The segmented pattern of bacteria GC disparity is the same as RY disparity, see ZcurvePlotter.RY_dS_curve*  
 **Args:**  
 - window (int):  
   Window size used by mean-smoothing method. If a value <= 0 is given, do nothing and return the original curve data. (Default: 0)
@@ -918,7 +1024,7 @@ plt.show()
 - mv (float):  
   The max value of S(P).
 
-#### `ZCurvePlotter.CpG_dS_curve`
+#### `ZcurvePlotter.CpG_dS_curve`
 Return dS(P) curve for CpG-profile and its max point and max value. Segmentation algorithm for DNA sequences.
 
 **Definition**  
@@ -940,11 +1046,11 @@ Genome segmentation
 **Usage Example**
 ```python
 from Bio import SeqIO
-from ZCurvePy import ZCurvePlotter
+from ZcurvePy import ZcurvePlotter
 import matplotlib.pyplot as plt
 
 record = SeqIO.read("e_coli.fa", "fasta")
-plotter = ZCurvePlotter(record)
+plotter = ZcurvePlotter(record)
 n, sp, mp, mv = plotter.CpG_dS_curve(window=10)
 # sp, mp, mv = plotter.CpG_dS_curve(return_n=False)
 # mp, mv = plotter.CpG_dS_curve(only_m=True)
@@ -954,7 +1060,7 @@ plt.xlabel('n (bp)', labelpad=10)
 plt.ylabel("dS(P)", labelpad=10)
 plt.show()
 ```
-*For visual presentation of segmented points, see ZCurvePlotter.CpG_prime_curve*  
+*For visual presentation of segmented points, see ZcurvePlotter.CpG_prime_curve*  
 **Args:**  
 - window (int):  
   Window size used by mean-smoothing method. If a value <= 0 is given, do nothing and return the original curve data. (Default: 0)
@@ -973,11 +1079,11 @@ plt.show()
 - mv (float):  
   The max value of S(P).
 
-### ZCurveEncoder  
-A simple API for converting a DNA sequence to Z-curve parameters, generally used in teaching or learning settings. Multi-thread is not supported by this API. If you want to use multi-thread, please use ZCurvePy.BatchZCurveCoder instead.
+### ZcurveEncoder  
+A simple API for converting a DNA sequence to Z-curve parameters, generally used in teaching or learning settings. Multi-thread is not supported by this API. If you want to use multi-thread, please use ZcurvePy.BatchZcurveCoder instead.
 
-#### `ZCurveEncoder.__init__`  
-`__init__` module of  ZCurvePy.ZCurveEncoder  
+#### `ZcurveEncoder.__init__`  
+`__init__` module of  ZcurvePy.ZcurveEncoder  
 
 **Args:**  
 - seq_or_record:  
@@ -985,9 +1091,9 @@ A simple API for converting a DNA sequence to Z-curve parameters, generally used
 
 **Returns:**  
 - object:  
-  _ZCurvePy.ZCurveEncoder  
+  _ZcurvePy.ZcurveEncoder  
 
-#### `ZCurveEncoder.mononucl_transform`  
+#### `ZcurveEncoder.mononucl_transform`  
 Do non-phase mononucleotide transformation on a DNA sequence. Generate 3 parameters.  
 
 **Definition**  
@@ -1003,13 +1109,13 @@ $x = [(A_n + G_n) - (C_n + T_n)] / n$
 $y = [(A_n + C_n) - (G_n + T_n)] / n$  
 $z = [(A_n + T_n) - (C_n + G_n)] / n$  
 
-For more information, please see: *ZCurvePy.ZCurveEncoder.k_nucl_phase_transform*
+For more information, please see: *ZcurvePy.ZcurveEncoder.k_nucl_phase_transform*
 
 **Usage Example**
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 params = encoder.mononucl_transform()
 # params = encoder.mononucl_transform(freq=True)
 ```
@@ -1027,7 +1133,7 @@ Gene recognition; Machine learning; Deep learning
 - ndarray:  
   Z-curve parameters
 
-#### `ZCurveEncoder.dinucl_transform`  
+#### `ZcurveEncoder.dinucl_transform`  
 Do non-phase dinucleotide transformation on a DNA sequence. Generate 12 parameters.  
 
 **Definition**  
@@ -1043,13 +1149,13 @@ $x^{\rm N}_n = [p_n({\rm NA}) + p_n({\rm NG})] - [p_n({\rm NC}) + p_n({\rm NT})]
 $y^{\rm N}_n = [p_n({\rm NA}) + p_n({\rm NC})] - [p_n({\rm NG}) + p_n({\rm NT})]$  
 $z^{\rm N}_n = [p_n({\rm NA}) + p_n({\rm NT})] - [p_n({\rm NC}) + p_n({\rm NG})]$  
 
-For more information, please see: *ZCurvePy.ZCurveEncoder.k_nucl_phase_transform*
+For more information, please see: *ZcurvePy.ZcurveEncoder.k_nucl_phase_transform*
 
 **Usage Example**
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 params = encoder.dinucl_transform()
 # params = encoder.dinucl_transform(freq=True)
 ```
@@ -1067,7 +1173,7 @@ Gene recognition; Machine learning; Deep learning
 - ndarray:  
   Z-curve parameters
 
-#### `ZCurveEncoder.trinucl_transform`  
+#### `ZcurveEncoder.trinucl_transform`  
 Do non-phase dinucleotide transformation on a DNA sequence. Generate 48 parameters.  
 
 **Definition**  
@@ -1083,13 +1189,13 @@ $x^{\rm N}_n = [p_n({\rm XYA}) + p_n({\rm XYG})] - [p_n({\rm XYC}) + p_n({\rm XY
 $y^{\rm N}_n = [p_n({\rm XYA}) + p_n({\rm XYC})] - [p_n({\rm XYG}) + p_n({\rm XYT})]$  
 $z^{\rm N}_n = [p_n({\rm XYA}) + p_n({\rm XYT})] - [p_n({\rm XYC}) + p_n({\rm XYG})]$  
 
-For more information, please see: *ZCurvePy.ZCurveEncoder.k_nucl_phase_transform*
+For more information, please see: *ZcurvePy.ZcurveEncoder.k_nucl_phase_transform*
 
 **Usage Example**
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 params = encoder.trinucl_transform()
 # params = encoder.trinucl_transform(freq=True)
 ```
@@ -1107,7 +1213,7 @@ Gene recognition; Machine learning; Deep learning
 - ndarray:  
   Z-curve parameters
 
-#### `ZCurveEncoder.mononucl_phase_transform`  
+#### `ZcurveEncoder.mononucl_phase_transform`  
 Do phasic mononucleotide transformation on a DNA sequence. Generate 9 parameters.  
 
 **Definition**  
@@ -1123,13 +1229,13 @@ $x^i_n = [p^i_n({\rm A}) + p^i_n({\rm G})] - [p^i_n({\rm C}) + p^i_n({\rm T})]$
 $y^i_n = [p^i_n({\rm A}) + p^i_n({\rm C})] - [p^i_n({\rm G}) + p^i_n({\rm T})],i=1,2,3$  
 $z^i_n = [p^i_n({\rm A}) + p^i_n({\rm T})] - [p^i_n({\rm G}) + p^i_n({\rm C})]$   
 
-For more information, please see: *ZCurvePy.ZCurveEncoder.k_nucl_phase_transform*  
+For more information, please see: *ZcurvePy.ZcurveEncoder.k_nucl_phase_transform*  
 
 **Usage Example**
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 params = encoder.mononucl_phase_transform()
 # params = encoder.mononucl_phase_transform(freq=True)
 ```
@@ -1153,7 +1259,7 @@ The picture below is the visualization of the self-training model obtained after
 
 ![CDS and non-coding ORF classification](./images/pythonapi/coding_flower.png) 
 
-#### `ZCurveEncoder.dinucl_phase_transform`  
+#### `ZcurveEncoder.dinucl_phase_transform`  
 Do phasic dinucleotide transformation on a DNA sequence. Generate 36 parameters.  
 
 **Definition**  
@@ -1169,13 +1275,13 @@ $x^i_n = [p^i_n({\rm NA}) + p^i_n({\rm NG})] - [p^i_n({\rm NC}) + p^i_n({\rm NT}
 $y^i_n = [p^i_n({\rm NA}) + p^i_n({\rm NC})] - [p^i_n({\rm NG}) + p^i_n({\rm NT})],i=1,2,3$  
 $z^i_n = [p^i_n({\rm NA}) + p^i_n({\rm NA})] - [p^i_n({\rm NA}) + p^i_n({\rm NA})]$   
 
-For more information, please see: *ZCurvePy.ZCurveEncoder.k_nucl_phase_transform*
+For more information, please see: *ZcurvePy.ZcurveEncoder.k_nucl_phase_transform*
 
 **Usage Example**
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 params = encoder.dinucl_phase_transform()
 # params = encoder.dinucl_phase_transform(freq=True)
 ```
@@ -1195,7 +1301,7 @@ Gene recognition; Machine learning; Deep learning
 - ndarray:  
   Z-curve parameters
 
-#### `ZCurveEncoder.trinucl_phase_transform`  
+#### `ZcurveEncoder.trinucl_phase_transform`  
 Do phasic trinucleotide transformation on a DNA sequence. Generate 144 parameters.  
 
 **Definition**  
@@ -1211,13 +1317,13 @@ $x^i_n = [p^i_n({\rm XYA}) + p^i_n({\rm XYG})] - [p^i_n({\rm XYC}) + p^i_n({\rm 
 $y^i_n = [p^i_n({\rm XYA}) + p^i_n({\rm XYC})] - [p^i_n({\rm XYG}) + p^i_n({\rm XYT})],i=1,2,3$  
 $z^i_n = [p^i_n({\rm XYA}) + p^i_n({\rm XYA})] - [p^i_n({\rm XYA}) + p^i_n({\rm XYA})]$   
 
-For more information, please see: *ZCurvePy.ZCurveEncoder.k_nucl_phase_transform*
+For more information, please see: *ZcurvePy.ZcurveEncoder.k_nucl_phase_transform*
 
 **Usage Example**
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 params = encoder.trinucl_phase_transform()
 # params = encoder.trinucl_phase_transform(freq=True)
 ```
@@ -1237,7 +1343,7 @@ Gene recognition; Machine learning; Deep learning
 - ndarray:  
   Z-curve parameters
 
-#### `ZCurveEncoder.k_nucl_phase_transform`  
+#### `ZcurveEncoder.k_nucl_phase_transform`  
 Do phasic k-nucleotide transformation on a DNA sequence. Generate 9 x 4^(k-1) parameters.  
 
 **Background**  
@@ -1260,7 +1366,7 @@ $z^i_n = [p^i_n({\rm N_{k-1}A}) + p^i_n({\rm N_{k-1}T})] - [p^i_n({\rm N_{k-1}G}
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 params = encoder.k_nucl_phase_transform(k=2, phase=3, local=True)
 ```
 
@@ -1281,7 +1387,7 @@ Gene recognition; Machine learning; Deep learning
 - ndarray:  
   Z-curve parameters
 
-#### `ZCurveEncoder.genome_order_index`
+#### `ZcurveEncoder.genome_order_index`
 Calculate the genome order index of a nucleic sequence.
 
 **Background**  
@@ -1299,7 +1405,7 @@ Genome Analysis; Machine Learning
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 value = encoder.genome_order_index()
 ```
 
@@ -1307,7 +1413,7 @@ value = encoder.genome_order_index()
 - float:  
   Genome order index
 
-#### `ZCurveEncoder.RY_order_index`
+#### `ZcurveEncoder.RY_order_index`
 
 Calculate the RY order index of a nucleic sequence  
 
@@ -1323,7 +1429,7 @@ Genome Analysis; Machine Learning
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 value = encoder.RY_order_index()
 ```
 
@@ -1331,7 +1437,7 @@ value = encoder.RY_order_index()
 - float:  
   RY order index
 
-#### `ZCurveEncoder.MK_order_index`
+#### `ZcurveEncoder.MK_order_index`
 
 Calculate the MK order index of a nucleic sequence  
 
@@ -1347,7 +1453,7 @@ Genome Analysis; Machine Learning
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 value = encoder.MK_order_index()
 ```
 
@@ -1355,7 +1461,7 @@ value = encoder.MK_order_index()
 - float:  
   MK order index
 
-#### `ZCurveEncoder.WS_order_index`
+#### `ZcurveEncoder.WS_order_index`
 
 Calculate the WS order index of a nucleic sequence  
 
@@ -1371,7 +1477,7 @@ Genome Analysis; Machine Learning
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 value = encoder.WS_order_index()
 ```
 
@@ -1379,7 +1485,7 @@ value = encoder.WS_order_index()
 - float:  
   WS order index
 
-#### `ZCurveEncoder.AT_order_index`
+#### `ZcurveEncoder.AT_order_index`
 
 Calculate the AT order index of a nucleic sequence  
 
@@ -1395,7 +1501,7 @@ Genome Analysis; Machine Learning
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 value = encoder.AT_order_index()
 ```
 
@@ -1403,7 +1509,7 @@ value = encoder.AT_order_index()
 - float:  
   AT order index
 
-#### `ZCurveEncoder.GC_order_index`
+#### `ZcurveEncoder.GC_order_index`
 
 Calculate the GC order index of a nucleic sequence  
 
@@ -1419,7 +1525,7 @@ Genome Analysis; Machine Learning
 ```python
 from Bio import SeqIO
 record = SeqIO.read("example.fa", "fasta")
-encoder = ZCurveEncoder(record)
+encoder = ZcurveEncoder(record)
 value = encoder.GC_order_index()
 ```
 
@@ -1427,19 +1533,19 @@ value = encoder.GC_order_index()
 - float:  
   GC order index
 
-### BatchZCurvePlotter
+### BatchZcurvePlotter
 
-A multithreaded version of ZCurvePlotter for processing dataset using Z-curve as embedding method in deep learning. Note that this API's functional richness is far less than the latter.
+A multithreaded version of ZcurvePlotter for processing dataset using Z-curve as embedding method in deep learning. Note that this API's functional richness is far less than the latter.
 
 **Usage Example:**
 ```python
 from Bio import SeqIO
 
 records = SeqIO.parse("sequences.fa", "fasta")
-plotter = BatchZCurvePlotter(mode='accum', n_jobs=8)
+plotter = BatchZcurvePlotter(mode='accum', n_jobs=8)
 z_values = plotter(records)
 
-plotter = BatchZCurvePlotter(mode='profile', n_jobs=8)
+plotter = BatchZcurvePlotter(mode='profile', n_jobs=8)
 z_values, k_values = plotter()
 ```
 
@@ -1456,15 +1562,15 @@ z_values, k_values = plotter()
   specifies the number of threads to use. If it is set to a negative value or 0, it will be reset to the number of CPU cores of the machine. (Default: -1)
 
 **Returns:**
-- object: `_ZCurvePy.BatchZCurvePlotter`
+- object: `_ZcurvePy.BatchZcurvePlotter`
 
-### BatchZCurveEncoder
+### BatchZcurveEncoder
 
-The multi-thread version of ZCurveEncoder with simpler syntax. More suitable for extracting features on large datasets.
+The multi-thread version of ZcurveEncoder with simpler syntax. More suitable for extracting features on large datasets.
 
 **Usage Example**
 ```python
-from ZCurvePy import BatchZCurveEncoder
+from ZcurvePy import BatchZcurveEncoder
 # Define the hyper-paramsfor 765-bit Z-curve transform
 hyper_params = [
     {"k": 1, "freq": True}  # Same as mononucl_phase_transform(freq=True)
@@ -1472,17 +1578,17 @@ hyper_params = [
     {"k": 3, "freq": True}  # Same as trinucl_phase_transform(freq=True)
     {"k": 4, "freq": True}  # Same as k_nucl_phase_transform(k=4, freq=True)
 ]
-encoder = BatchZCurveEncoder(hyper_params, n_jobs=8)
+encoder = BatchZcurveEncoder(hyper_params, n_jobs=8)
 features = encoder(records)
 ```
 
 **Args:**
 - hyper_params (list):  
-  JSON styled object that defines the hyper-parameters for Z-curve transformation. For example, the following content tells the BatchZCurveEncoder to do a mononucleotide non-phase Z-curve t.f. and a trinucleotide phase-specific Z-curve t.f. to every item, then concatenate them as a 147-dim feature vector:
+  JSON styled object that defines the hyper-parameters for Z-curve transformation. For example, the following content tells the BatchZcurveEncoder to do a mononucleotide non-phase Z-curve t.f. and a trinucleotide phase-specific Z-curve t.f. to every item, then concatenate them as a 147-dim feature vector:
   ```python
   [{'k': 1, 'phase': 1, 'local': True}, {'k': 3, 'phase': 3, 'local': True}]
   ```
-  For the meaning of the variable names, see the APIs of ZCurvePy.ZCurveEncoder.
+  For the meaning of the variable names, see the APIs of ZcurvePy.ZcurveEncoder.
 
   - k (int):  
     must be given >= 1, and preferably not more than 6. (Default: None)
@@ -1497,15 +1603,15 @@ features = encoder(records)
   specifies the number of threads to use. If it is set to a negative value or 0, it will be reset to the number of CPU cores of the machine. (Default: -1)
 
 **Returns:**
-- object: `_ZCurvePy.BatchZCurveEncoder`
+- object: `_ZcurvePy.BatchZcurveEncoder`
 
-### ZCurveSegmenter
+### ZcurveSegmenter
 
 Z-curve segmenter based on genome order number, which can be considered an extended version of the GC-Profile's core. It has 7 modes and can be used for edge recognition of genomic islands, CpG islands, AT-rich regions and other structures.
 
-#### `ZCurveSegmenter.__init__`  
+#### `ZcurveSegmenter.__init__`  
 
-The `__init__` function of ZCurvePy.ZCurveSegmenter.
+The `__init__` function of ZcurvePy.ZcurveSegmenter.
 
 **Args:**
 - mode (str):  
@@ -1527,7 +1633,7 @@ The `__init__` function of ZCurvePy.ZCurveSegmenter.
 - max_depth (int):  
   The maximum depth of iteration. Defaults to 9999.
 
-#### `ZCurveSegmenter.run`  
+#### `ZcurveSegmenter.run`  
 
 Run the segmenter.
 
@@ -1539,36 +1645,36 @@ Run the segmenter.
 - list:  
   A list of tuples, each tuple contains the position and the value of the segment point.
 
-#### `ZCurveSegmenter.reset`  
+#### `ZcurveSegmenter.reset`  
 
 Reset the segmenter. Clear segmentation points generated in the last run.
 
-### ZCurveBuilder
+### ZcurveBuilder
 
 A simple API for building gene recognizer. It includes basic modules such as feature extraction, preprocessing, negative sampling and model training. Each module is customizable. Core algorithm of ZCURVE 2.0 / 3.0.
 
 **Usage Example**
 ```python
-from ZCurvePy.RunnableScriptsUtil import download_acc, extract_CDS
-from ZCurvePy import ZCurveBuilder
+from ZcurvePy.RunnableScriptsUtil import download_acc, extract_CDS
+from ZcurvePy import ZcurveBuilder
 from Bio.SeqIO import read, parse
 # Load positive dataset
 path = download_acc("NC_000913.3")[0]
 pos_dataset = extract_CDS(path)
-builder = ZCurveBuilder(standard=True, n_jobs=8)
+builder = ZcurveBuilder(standard=True, n_jobs=8)
 builder.fit(pos_dataset)
 # Some sample sequences
 records = parse("samples.fa", "fasta")
 results = builder.predict(records)
 ```
 
-#### `ZCurveBuilder.__init__`
+#### `ZcurveBuilder.__init__`
 
-The `__init__` function of ZCurvePy.ZCurveBuilder
+The `__init__` function of ZcurvePy.ZcurveBuilder
 
 **Args:**
 - encoder (Callable):  
-  A function or object that can be called with a list of supported sequences and returns a feature matrix of the data set. Default is a BatchZCurveEncoder object that yields 189-dim features.
+  A function or object that can be called with a list of supported sequences and returns a feature matrix of the data set. Default is a BatchZcurveEncoder object that yields 189-dim features.
 - model (object):  
   A machine learning model object that have `fit` and `predict_proba` method. Default is a RBF-SVM model from `sklearn.svm.SVC` with balanced class weights.
 - standard (bool):  
@@ -1579,16 +1685,16 @@ The `__init__` function of ZCurvePy.ZCurveBuilder
   Default: False  
 - neg_pos_ratio (int):  
   The ratio between negative samples and positive samples, decides how many negative sequences should be obtained from each positive case sequence.  
-  Parameter for `ZCurveBuilder.shuffle`, default is 5.
+  Parameter for `ZcurveBuilder.shuffle`, default is 5.
 - seed (int):  
   Random seed.
 - n_jobs (int):  
   Number of CPU cores used. All are used by default.
 
 **Returns:**  
-- object: `ZCurvePy.ZCurveBuilder`
+- object: `ZcurvePy.ZcurveBuilder`
 
-#### `ZCurveBuilder.fit`
+#### `ZcurveBuilder.fit`
 
 Fit the model after negative samples are generated and the dataset is preprocessed.
 
@@ -1596,7 +1702,7 @@ Fit the model after negative samples are generated and the dataset is preprocess
 - pos_data (object):  
   Positive example sequence data sets generally use reference gene sequences as positive examples.
 
-#### `ZCurveBuilder.predict`
+#### `ZcurveBuilder.predict`
 
 Predict whether a set of sequences is a gene coding sequence.
 
@@ -1615,17 +1721,17 @@ Predict whether a set of sequences is a gene coding sequence.
 
 ### decode
 
-`ZCurvePy.decode(*args, **kwargs)`  
+`ZcurvePy.decode(*args, **kwargs)`  
 
-Decode Z-curves to DNA sequences. Only the three 3D curves provided by BatchZCurvePlotter can be reduced to DNA sequences, so this API is actually the reverse of the latter. Multi-thread is supported.
+Decode Z-curves to DNA sequences. Only the three 3D curves provided by BatchZcurvePlotter can be reduced to DNA sequences, so this API is actually the reverse of the latter. Multi-thread is supported.
 
 **Usage Example:**
 ```python
 from Bio import SeqIO
-from ZCurvePy import BatchZCurvePlotter, decode
+from ZcurvePy import BatchZcurvePlotter, decode
 
 records = SeqIO.parse("sequences.fa", "fasta")
-plotter = BatchZCurvePlotter(mode='accum', n_jobs=8)
+plotter = BatchZcurvePlotter(mode='accum', n_jobs=8)
 z_values = plotter(records)
 sequences = decode(z_values)
 ```
@@ -1647,7 +1753,7 @@ sequences = decode(z_values)
 - seqs (list):        list of sequences as str.
 
 ### shuffle
-`ZCurvePy.shuffle(*args, **kwargs)`  
+`ZcurvePy.shuffle(*args, **kwargs)`  
 
 Do Fisher-Yates shuffle to the bases in a sequence. This API's operands are batch datasets and supports multi-threads.
 

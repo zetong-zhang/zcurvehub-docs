@@ -1,7 +1,7 @@
 # Quickstart
 We provide the installation of the Python package here, along with a set of simple examples of its usage. Please read the tutorial of Web Service [here](./webserver.md) if you want to use the functions on the Internet.
 ## Installation
-Python includes the package management system `pip` which should allow you to install ZCurvePy and its dependencies if needed, as well as upgrade or uninstall with just one command in the terminal:
+Python includes the package management system `pip` which should allow you to install ZcurvePy and its dependencies if needed, as well as upgrade or uninstall with just one command in the terminal:
 ```bash
 python -m pip install zcurvepy
 python -m pip install --upgrade zcurvepy
@@ -10,10 +10,10 @@ python -m pip uninstall zcurvepy
 ```
 Starting from 1.5.11, the return value types of some frequently used API functions have been modified from Python list to Numpy ndarray. Therefore, please install Numpy 1.x before compiling and installing.
 ```bash
-python -m pip install numpy>=1.21,<2.0
+python -m pip install "numpy>=1.21,<2.0"
 ```
 ### Python Requirements
-Python 3.7, 3.8, 3.9, 3.10 and 3.11 are supported. We currently recommend using Python 3.9.6 (https://www.python.org/downloads/release/python-396/)
+Python 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 are supported. We currently recommend using Python 3.9.6 (https://www.python.org/downloads/release/python-396/)
 ### Operating System
 Windows 10/11, macOS, and Linux running on x86_64 arch are supported. Note that some features of Matplotlib may not work on systems without a graphic interface (e.g., RedHat).
 ## Code Examples
@@ -21,8 +21,8 @@ Windows 10/11, macOS, and Linux running on x86_64 arch are supported. Note that 
    (1) Python API implementation:  
 
     ```python
-    from ZCurvePy import ZCurvePlotter
-    from ZCurvePy.RunnableScriptsUtil import download_acc
+    from ZcurvePy import ZcurvePlotter
+    from ZcurvePy.Util import download_acc
     from Bio.SeqIO import read
     import matplotlib.pyplot as plt
     # Download genomes (Please wait for several seconds)
@@ -30,9 +30,9 @@ Windows 10/11, macOS, and Linux running on x86_64 arch are supported. Note that 
     ax3d = plt.figure().add_subplot(projection='3d')
     ax2d = plt.figure().add_subplot()
     for save_path in save_paths:
-        record = read(save_path, "genbank")
+        record = read(save_path, "fasta")
         # Calculate components of smoothed Z-curve
-        plotter = ZCurvePlotter(record)
+        plotter = ZcurvePlotter(record)
         n, x, y, _ = plotter.z_curve(window=1000)
         zp, _ = plotter.z_prime_curve(window=1000, return_n=False)
         # Matplotlib 2D display
@@ -83,28 +83,30 @@ Windows 10/11, macOS, and Linux running on x86_64 arch are supported. Note that 
     (1) Python API implementation:  
 
     ```python
-    from ZCurvePy.RunnableScriptsUtil import download_acc, extract_CDS
-    save_paths = download_acc("NC_000854.2")
+    from ZcurvePy.Util import download_acc, extract_CDS
+    import numpy as np
+    save_paths = download_acc("NC_000854.2", __name__, "gb")
     records = extract_CDS(save_paths[0])
 
-    from ZCurvePy import ZCurveEncoder
+    from ZcurvePy import ZcurveEncoder
     def encoding(record):
         """ simple batch processing """
-        encoder, feature = ZCurveEncoder(record), []
+        encoder = ZcurveEncoder(record)
         # Calculate and concatenate 765-bit Z-curve transform
-        feature += encoder.mononucl_phase_transform(freq=True)
-        feature += encoder.dinucl_phase_transform(freq=True)
-        feature += encoder.trinucl_phase_transform(freq=True)
-        feature += encoder.k_nucl_phase_transform(k=4, freq=True)
+        feature = encoder.mononucl_phase_transform(freq=True)
+        feature = np.concatenate((feature, encoder.dinucl_phase_transform(freq=True)))
+        feature = np.concatenate((feature, encoder.trinucl_phase_transform(freq=True)))
+        feature = np.concatenate((feature, encoder.k_nucl_phase_transform(k=4, freq=True)))
         return feature
-    
-    features = [encoding(record) for record in records]
+
+    features = np.array([encoding(record) for record in records])
+    print(features.shape)
     ```
 
     or use another more powerful API to implement multi-threading:
 
     ```python
-    from ZCurvePy import BatchZCurveEncoder
+    from ZcurvePy import BatchZcurveEncoder
     # Define the hyper-paramsfor 765-bit Z-curve transform
     hyper_params = [
         {"k": 1, "freq": True}  # Same as mononucl_phase_transform(freq=True)
@@ -112,7 +114,7 @@ Windows 10/11, macOS, and Linux running on x86_64 arch are supported. Note that 
         {"k": 3, "freq": True}  # Same as trinucl_phase_transform(freq=True)
         {"k": 4, "freq": True}  # Same as k_nucl_phase_transform(k=4, freq=True)
     ]
-    encoder = BatchZCurveEncoder(hyper_params, n_jobs=8)
+    encoder = BatchZcurveEncoder(hyper_params, n_jobs=8)
     features = encoder(records)
     ```
     (2) Commandline usage:
@@ -140,23 +142,23 @@ Windows 10/11, macOS, and Linux running on x86_64 arch are supported. Note that 
 3. Segmentation for DNA sequences
     Python API implementation:
     ```python
-    from ZCurvePy.RunnableScriptsUtil import download_acc
+    from ZcurvePy.Util import download_acc
     from Bio.SeqIO import read
-    from ZCurvePy import ZCurveSegmenter, ZCurvePlotter
+    from ZcurvePy import ZcurveSegmenter, ZcurvePlotter
     import matplotlib.pyplot as plt
     # Download data
     path = download_acc("CP001956.1")
-    record = SeqIO.read(path[0], "gb")
+    record = read(path[0], "fasta")
     # Segmentation
-    segmenter = ZCurveSegmenter(mode='WS', min_len=50000)
+    segmenter = ZcurveSegmenter(mode='WS', min_len=50000)
     seg_points = segmenter.run(record)
     # Calculate z' curve for visualization
-    plotter = ZCurvePlotter(record)
+    plotter = ZcurvePlotter(record)
     n, zp, _ = plotter.z_prime_curve()
     # Visualization
     for point, _ in seg_points:
-        plt.axvline(point)
-    plt.plot(x)
+        plt.axvline(point, color='red')
+    plt.plot(n, zp)
     plt.show()
     ```
     Commandline usage:
@@ -169,13 +171,13 @@ Windows 10/11, macOS, and Linux running on x86_64 arch are supported. Note that 
     # We recommend turning on the acceleration system on Intel platforms
     from sklearnex import patch_sklearn
     patch_sklearn()
-    from ZCurvePy.RunnableScriptsUtil import download_acc, extract_CDS
-    from ZCurvePy import ZCurveBuilder
+    from ZcurvePy.Util import download_acc, extract_CDS
+    from ZcurvePy import ZcurveBuilder
     from Bio.SeqIO import read, parse
     # Load positive dataset
-    path = download_acc("NC_000913.3")[0]
+    path = download_acc("NC_000913.3", __name__, "gb")[0]
     pos_dataset = extract_CDS(path)
-    builder = ZCurveBuilder(standard=True, n_jobs=8)
+    builder = ZcurveBuilder(standard=True, n_jobs=8)
     builder.fit(pos_dataset)
     # Some sample sequences
     records = parse("samples.fa", "fasta")

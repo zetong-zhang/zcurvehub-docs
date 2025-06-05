@@ -1,6 +1,8 @@
 ## Citation
 The paper on this work has not yet been published. If you would like to cite this software in your work, please contact us to discuss alternatives.
 
+ZT Zhang, Y Lin, H Luo, F Gao. ZcurveHub: an updated large-scale Z curve knowledgebase with scalable genome analysis framework.
+
 ## Contact
 The offical website of TUBIC: https://tubic.org/ | https://tubic.tju.edu.cn  
 

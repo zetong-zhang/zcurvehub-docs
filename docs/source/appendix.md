@@ -21,6 +21,6 @@ Remarks:
     'Z' means diaminopurine and can only be paired with 'A'. (Zhou Y, et al. Science, 
     2021, 372(6541): 512-516.)
 
-## ZCurvePy Source Code
+## ZcurvePy Source Code
 
-ZCurvePy is a free open source software follows the MIT license, so you can view the source code or change in my code repository: https://github.com/zetong-zhang/zcurvepy/
+ZcurvePy is a free open source software follows the MIT license, so you can view the source code or change in my code repository: https://github.com/zetong-zhang/zcurvepy/

@@ -1,5 +1,5 @@
 # Web Service
-ZCurveHub is an integrated platform for genomic Z-curve feature analysis based on ZCurvePy, and it is freely available on http://tubic.tju.edu.cn/zcurve/.
+ZcurveHub is an integrated platform for genomic Z-curve feature analysis based on ZcurvePy, and it is freely available on http://tubic.tju.edu.cn/zcurve/.
 
 ## Z-curve Plotter
 Z-curve Plotter allows users to upload 1 to 3 nucleotide sequences and select 1 to 4 components from 11 components for visualization for each sequence at most. With Plotly's powerful interactive charts, you can scale, rotate curve graphs and view information about each coordinate point.
