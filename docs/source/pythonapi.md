@@ -379,7 +379,34 @@ Returns sliding window calculated AT fraction.
 **Definition**  
 Let $A^k_n$, $T^k_n$, $G^k_n$ and $C^k_n$ be the count of G and C of a subsequence consisting of $k$ nucleotides (window size) at position $n$ of a DNA, s.t.
 
-$fraction_{GC}(n, k) = (A^k_n + T^k_n) / (A^k_n + T^k_n + G^k_n + C^k_n), n=1,2,3 ...,N$
+$fraction_{AT}(n, k) = (A^k_n + T^k_n) / (A^k_n + T^k_n + G^k_n + C^k_n), n=1,2,3 ...,N$
+
+**Application Scene**  
+Genome visualization
+
+**Usage Example**
+```python
+from Bio import SeqIO
+from ZcurvePy import ZcurvePlotter
+import matplotlib.pyplot as plt
+
+record = SeqIO.read("e_coli.fa", "fasta")
+plotter = ZcurvePlotter(record)
+n, g = plotter.AT_fraction(window=1000)
+# g = plotter.AT_fraction(window=1000, return_n=False)
+plt.plot(n, g)
+plt.xlabel('n (bp)', labelpad=10)
+plt.ylabel('AT Fraction', labelpad=10)
+plt.show()
+```
+
+#### `ZcurvePlotter.GC_fraction`
+Returns sliding window calculated GC fraction.
+
+**Definition**  
+Let $A^k_n$, $T^k_n$, $G^k_n$ and $C^k_n$ be the count of G and C of a subsequence consisting of $k$ nucleotides (window size) at position $n$ of a DNA, s.t.
+
+$fraction_{GC}(n, k) = (G^k_n + C^k_n) / (A^k_n + T^k_n + G^k_n + C^k_n), n=1,2,3 ...,N$
 
 **Application Scene**  
 Genome visualization
@@ -396,10 +423,9 @@ n, g = plotter.GC_fraction(window=1000)
 # g = plotter.GC_fraction(window=1000, return_n=False)
 plt.plot(n, g)
 plt.xlabel('n (bp)', labelpad=10)
-plt.ylabel('GC Skew', labelpad=10)
+plt.ylabel('GC Fraction', labelpad=10)
 plt.show()
 ```
-
 
 #### `ZcurvePlotter.x_prime_curve`
 

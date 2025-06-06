@@ -1,11 +1,11 @@
 # Web Service
-ZcurveHub is an integrated platform for genomic Z-curve feature analysis based on ZcurvePy, and it is freely available on http://tubic.tju.edu.cn/zcurve/.
+ZcurveHub is an integrated platform for genomic Z-curve feature analysis based on ZcurvePy, and it is freely available on http://tubic.org/zcurve/ | http://tubic.tju.edu.cn/zcurve/.
 
 ## Z-curve Plotter
-Z-curve Plotter allows users to upload 1 to 3 nucleotide sequences and select 1 to 4 components from 11 components for visualization for each sequence at most. With Plotly's powerful interactive charts, you can scale, rotate curve graphs and view information about each coordinate point.
+Z-curve Plotter allows users to upload 1 to 3 nucleotide sequences and select 1 to 4 components from 11 components for visualization for each sequence at most. With Plotly's powerful interactive charts, you can scale, rotate curve graphs and view information about each coordinate point. Auxiliary curves (AT/GC skew/fraction) is also supported for comparative analysis.
 
 ### Input
-We offer three input methods: file upload, text input and NCBI Accession. Each input method should meet the above requirements.
+We offer 3 input methods: File Upload, Text Input and NCBI Accession. Each input method should meet the above requirements.
 
 #### File Upload  
 
@@ -31,7 +31,7 @@ Enter a legal NCBI Nucleotide accession number (e.g. KP205272.1), and the progra
 Z-curve Plotter manages the input sequences in a card-like manner and enables customized settings for all items conveniently.
 
 #### 2D Mode
-The card displays basic information such as the name, length, and GC content of the sequence, as well as options such as the plot start point, plot end point, smoothing window size, and curve types.
+The card displays basic information such as the name, length, and GC content of the sequence, as well as options such as the plot start point, plot end point, smoothing window size, and curve types. If your input provides a matching NCBI accession, you can view the Sequence features using the NCBI Sequence Viewer. 
 
 - **Start**  
 Plot start point. Its index starting from 0 like most programming language, and should not be larger than the length of the sequence.
@@ -44,6 +44,9 @@ The window size of mean smoothing. The range of values is [0, 1000].
 
 - **2D Curve Types**  
 Optional curve types, up to 4 types can be selected for each sequence. The definition of each type can be found [here](./introduction.md#main-functions).
+
+- **Extra Options**  
+Set parameters for the auxiliary curves (AT/GC skew/fraction).
 
 ![Z-curve Plotter Settings](./images/webserver/plotter/plotter_setting_2d.png)
 
@@ -125,12 +128,33 @@ Data preprocessing options, available using the API provided by Sci-kit Learn. W
   - Components  
     The number of components retained in the data after dimensionality reduction.  
 
-- **K-means Clustering**
+- **K-means Clustering**  
   Conduct unsupervised cluster analysis on the original data or preprocessed data.
   - Clusters  
     Specify the number of clusters.
 
 ![Z-curve Preprocessing](./images/webserver/encoder/encoder_preprocessing.png)
+
+### Machine Learning  
+
+Here we provide three models that learn the Z-curve parameters' features well: Support Vector Machine (SVM), Random Forest (RF) and Multilayer Perceptron (MLP). Each of them provides two hyperparameters that have the most significant impact on the model effect for adjustment. In addition, the weights of positive and negative samples can also be set freely. The final machine learning models will be saved as `[job_id]_ml_model.joblib` and can be used like sci-kit learn models.
+
+![Z-curve Machine Learning](./images/webserver/encoder/encoder_machine_learning.png)
+
+### Output
+
+The task of Z-curve Encoder is computationally intensive, so it cannot feed back the results in real time like the other two applications. You need to get the results from the **Job ID** generated when you submit it. In the job details page, you can get the basic information when submitting. 
+
+![Z-curve Encoder Job](./images/webserver/encoder/encoder_job.png)
+
+#### Visualization
+Here we provide visualizations of principal component analysis and cluster analysis (PCA must be checked previously, otherwise cluster analysis will only output the metrics). You can intuitively see the power of the Z-curve method for sequence feature extraction.
+
+![Z-curve PCA Visualization](./images/webserver/encoder/encoder_job_pca.png)
+
+#### Metrics
+We provide five machine learning metrics and four clustering metrics for reference. The AUC metric provides a visual representation.
+
 
 ## Z-curve Segmenter
 
@@ -170,7 +194,9 @@ In the above formula, P represents the left subsequence at point $N$ of a dna se
     |WS disparity         |$S({\rm P})=(a^2+t^2)+(g^2+c^2)$ |Genomic Island Search                |
     |AT disparity         |$S({\rm P})=a^2+t^2$             |                                     |
     |GC disparity         |$S({\rm P})=g^2+c^2$             |Leading/Lagging Chain search         |
-    |CpG disparity        |$S({\rm P})=[p_n({\rm CpG})]^2+[1-p_n({\rm CpG})]^2$ |CpG Island Search|
+    |CpG profile        |$S({\rm P})=[p_n({\rm CpG})]^2+[1-p_n({\rm CpG})]^2$ |CpG Island Search|
+  
+  *Note*: 'GC profile' mode is the same as 'WS disparity', but it will output the negative form of the curve when visualized.
 
 - **Start Position**  
   The start position of the fragment [start, stop) to be segmented.  
@@ -199,12 +225,12 @@ In the above formula, P represents the left subsequence at point $N$ of a dna se
 
 ### Visualizaion
 
-The results of the corresponding curve segmentation are visualized, so that users can adjust the parameters. With the powerful Plotly library, you can move, zoom, and hide curves to get the best picture possible. 
+The results of the corresponding curve segmentation are visualized, so that users can adjust the parameters. With the powerful Plotly library, you can move, zoom, and hide curves to get the best picture possible. Sequence features can also be viewed if a valid NCBI accession is provided by the input.
 
 ![Z-curve Segmenter Visualization](./images/webserver/segmenter/segmenter_visualization.png)
 
 ### Results  
 
-Display segment results in tabular form. You can download it via the Download button. Use the Plotly control to save the image display.
+Display segment results in tabular form. The table is interactive, so you can click directly to jump to the corresponding region of the sequence. You can download it via the Download button. Use the Plotly control to save the image display. 
 
 ![Z-curve Segmenter Results](./images/webserver/segmenter/segmenter_results.png)

@@ -34,7 +34,7 @@ Dr. Luo is an accomplished biophysicist and bioinformatics researcher currently 
 
 His research program focuses on three key areas: (1) Bioinformatics algorithm development for microbial genome analysis; (2) Essential gene characterization and prediction systems; (3)Construction of specialized biological databases.Notable achievements include leading the **National Natural Science Foundation of China Youth Program** project *"Feature Analysis and Prediction of Human Essential Genes Based on Essential Gene Databases"*, recognized for its innovative approach to gene essentiality studies. His work has been honored with the **Excellent Paper Award at the National Postdoctoral Forum on AI Development and Applications**.
 
-## Zhang Ze-Tong
+## Zhang Zetong
 
 **Graduate Student, School of Science, Tianjin University**  
 

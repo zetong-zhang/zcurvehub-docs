@@ -47,7 +47,7 @@ Detect critical structural boundaries using genome order index algorithm, identi
     |WS disparity         |$S({\rm P})=(a^2+t^2)+(g^2+c^2)$ |Genomic Island Search              |
     |AT disparity         |$S({\rm P})=a^2+t^2$             |                                   |
     |GC disparity         |$S({\rm P})=g^2+c^2$             |Leading/Lagging Chain search       |
-    |CpG disparity        |$S({\rm P})=[p_n({\rm CpG})]^2+[1-p_n({\rm CpG})]^2$ |CpG Island Search|
+    |CpG profile        |$S({\rm P})=[p_n({\rm CpG})]^2+[1-p_n({\rm CpG})]^2$ |CpG Island Search|
 - **Build Classification Models**  
 Construct nucleic acid sequence classifier with biological function based on machine learning or deep learning framework, high-precision protein gene recognizers for specific species taxa of prokaryotes, which is very useful when studying newly sequenced or resequenced species that are closely related.
 ## Technical Highlights
@@ -61,7 +61,7 @@ Construct nucleic acid sequence classifier with biological function based on mac
 2. **Cross-Paradigm Interfaces**
     - **Web Service Interfaces**  
     User-friendly Web interface enables you to quickly analyze data using cloud resources without installation, making it easy for beginners.  
-    ![Web Service Interface](./images/webserver.png)
+    - ![Web Service Interface](./images/webserver.png)
 
     - **Command-Line Interface**  
     Streamlined CLI commands for batch processing and pipeline integration, ideal for bioinformatics workflows, e.g.
