@@ -1,11 +1,11 @@
 # Introduction
-The Unified Symmetry Theory of DNA sequences, also known as **Z-curve theory**, is a systematic methodology for analyzing DNA sequences through geometric representations. Rooted in group theory, this approach maps any DNA sequence to a unique three-dimensional curve, enabling comprehensive analysis of nucleotide distributions and spatial configurations. As an efficient feature extraction framework, Z-curve theory has been widely adopted in bioinformatics for genomic functional region identification (e.g., coding genes, promoters, replication origins, horizontal gene transfer islands), nucleosome protein-DNA interaction studies, protein-non-coding RNA binding analyses.  
+The Unified Symmetrical Theory of DNA sequences, also known as **Z-curve theory**, is a systematic methodology for analyzing DNA sequences through geometric representations. Rooted in group theory, this approach maps any DNA sequence to a unique three-dimensional curve, enabling comprehensive analysis of nucleotide distributions and spatial configurations. As an efficient feature extraction framework, Z-curve theory has been widely adopted in bioinformatics for genomic functional region identification (e.g., coding genes, promoters, replication origins, horizontal gene transfer islands), nucleosome protein-DNA interaction studies, protein-non-coding RNA binding analyses.  
 
 Despite its broad impact on international bioinformatics research, existing implementations remain fragmented across specialized tools. To address this gap, the **T**ianjin **U**niversity **B**io**I**nformatics **C**enter (**TUBIC**) developed **ZcurveHub** – a trinity platform integrating:  
 
 - Python package *ZcurvePy* with flexible APIs and commandline tools (https://pypi.org/project/zcurvepy/)
 - Web Service that can conduct genomic analysis online (http://tubic.tju.edu.cn/zcurve/ | https://tubic.org/zcurve/)
-- Database that stores nearly 60,000 structured Z-curve related data (http://tubic.tju.edu.cn/zcurve/database)  
+- Database that stores nearly 220,000 structured Z-curve related data (http://tubic.tju.edu.cn/zcurve/database)  
 
 ## Main Functions
 This generation of ZcurveHub mainly integrates 4 basic functions :
