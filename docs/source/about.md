@@ -1,6 +1,6 @@
 # About
 
-## Citing
+## Citation
 The paper on this work has not yet been published. If you would like to cite this software in your work, please contact us to discuss alternatives.
 
 Zhang Z, Lin Y, Luo H, Gao F. ZcurveHub: an updated large-scale Z curve knowledgebase with scalable genome analysis framework.
