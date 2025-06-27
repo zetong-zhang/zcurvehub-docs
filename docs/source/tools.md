@@ -1,5 +1,5 @@
-# Web Service
-ZcurveHub is an integrated platform for genomic Z-curve feature analysis based on ZcurvePy, and it is freely available on http://tubic.org/zcurve/ | http://tubic.tju.edu.cn/zcurve/.
+# Tools
+ZcurveHub provides various tools for analyzing genomes using Z-curve method, which are freely available on https://tubic.tju.edu.cn/zcurve/.
 
 ## Z-curve Plotter
 Z-curve Plotter allows users to upload 1 to 3 nucleotide sequences and select 1 to 4 components from 11 components for visualization for each sequence at most. With Plotly's powerful interactive charts, you can scale, rotate curve graphs and view information about each coordinate point. Auxiliary curves (AT/GC skew/fraction) is also supported for comparative analysis.
@@ -69,11 +69,11 @@ The visualized results can be saved as PNG images via Plotly, or the original da
 ## Z-curve Encoder
 
 ### Input
-This web application allows users to upload sequences or genomes in FASTA/GenBank format and can choose to use the sequences directly as input or extract CDSs from GenBank as input. Our official server requires that the length of a single sequence cannot exceed **30 kb**, and the total number of sequences cannot exceed **50,000**.  
+Z-curve Encoder allows users to upload sequences or genomes in FASTA/GenBank format and can choose to use the sequences directly as input or extract CDSs from GenBank as input. Our official server requires that the length of a single sequence cannot exceed **30 kb**, and the total number of sequences cannot exceed **50,000**.  
 
 #### Sequence File Upload
 
-The default input for this application is not allowed to be empty or to submit an empty file. When the machine learning option is turned on, this entry will default to positive sample input. The result of this feature extraction is in `[job_id]_features.npy` in the downloaded output file.  
+The default input for this tool is not allowed to be empty or to submit an empty file. When the machine learning option is turned on, this entry will default to positive sample input. The result of this feature extraction is in `[job_id]_features.npy` in the downloaded output file.  
 
 ![Z-curve Encoder Positive Input](./images/webserver/encoder/encoder_input_pos.png)
 
@@ -85,7 +85,7 @@ Additional input options for this application. If machine learning is enabled, t
 
 #### Negative Control Shuffling  
 
-An option to generate a random sequence. For the ZCURVE system, it is a means of generating negative examples during self-training, while for the machine learning process, it can verify the validity of the model. The result of this feature extraction is in `[job_id]_shuffle_features.npy` in the downloaded output file.  
+An option to generate a set of random sequences. For the ZCURVE system, it is a means of generating negative examples during self-training, while for the machine learning process, it can verify the validity of the model. The result of this feature extraction is in `[job_id]_shuffle_features.npy` in the downloaded output file.  
 
 - **Negative/Positive Ratio**  
   The ratio between the generated negative and positive samples.  
@@ -143,7 +143,7 @@ Here we provide three models that learn the Z-curve parameters' features well: S
 
 ### Output
 
-The task of Z-curve Encoder is computationally intensive, so it cannot feed back the results in real time like the other two applications. You need to get the results from the **Job ID** generated when you submit it. In the job details page, you can get the basic information when submitting. 
+The task of Z-curve Encoder is computationally intensive, so it cannot feed back the results in real time like the other two tools. You need to get the results from the **Job ID** generated when you submit it. In the job details page, you can get the basic information when submitting. 
 
 ![Z-curve Encoder Job](./images/webserver/encoder/encoder_job.png)
 
@@ -159,7 +159,7 @@ We provide five machine learning metrics and four clustering metrics for referen
 ## Z-curve Segmenter
 
 ### Input
-This Web application allows users to enter in three ways: plain text, file, and NCBI Accession. Either way, only one sequence can be entered. For example, if a user submits a file with multiple sequences, only the first sequence will be taken, and the rest, along with annotation information, will be ignored. Our official server requires that the length of a single sequence cannot exceed **100 kb**.
+Z-curve Segmenter allows users to enter in three ways: plain text, file, and NCBI Accession. Either way, only one sequence can be entered. For example, if a user submits a file with multiple sequences, only the first sequence will be taken, and the rest, along with annotation information, will be ignored. Our official server requires that the length of a single sequence cannot exceed **100 kb**.
 #### Text Input
 
 The text input field can highlight the A, T, G, and C characters to help you determine the correctness of the input sequence, but only spaces, line feeds, tabs, and carriage returns are filtered out when submitted. Characters such as R, Y, M, K, W, S, B, D, H, V, U are processed normally, and other characters are treated as N (including N).  

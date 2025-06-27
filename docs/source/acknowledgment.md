@@ -1,2 +1,0 @@
-## Acknowledgement <a id="title8"></a>
-The authors wishes to thank Chun-Ting Zhang, Academician of the Chinese Academy of Sciences, who proposed the Z-curve theory and his collaborators Ren Zhang, Lin-Lin Chen, Hong-Yu Ou and Feng-Biao Guo for their significant contributions to the development of the theory.  <p align="right">— Staff of TUBIC, 2025-06-02</p>

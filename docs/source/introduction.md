@@ -1,16 +1,16 @@
 # Introduction
-The Unified Symmetrical Theory of DNA sequences, also known as **Z-curve theory**, is a systematic methodology for analyzing DNA sequences through geometric representations. Rooted in group theory, this approach maps any DNA sequence to a unique three-dimensional curve, enabling comprehensive analysis of nucleotide distributions and spatial configurations. As an efficient feature extraction framework, Z-curve theory has been widely adopted in bioinformatics for genomic functional region identification (e.g., coding genes, promoters, replication origins, horizontal gene transfer islands), nucleosome protein-DNA interaction studies, protein-non-coding RNA binding analyses.  
+The unified symmetrical theory of DNA sequences, also known as **Z-curve theory**, is a systematic method for analyzing DNA sequences through geometric representations. Rooted in group theory, this approach maps any nucleic sequence to a unique three-dimensional curve, enabling comprehensive analysis of nucleotide distributions and spatial configurations. As an efficient feature extraction framework, Z-curve theory has been widely adopted in bioinformatics for genomic functional region identification (e.g., coding genes, promoters, replication origins, horizontal gene transfer islands), nucleosome protein-DNA interaction studies, protein-non-coding RNA binding analysis.  
 
 Despite its broad impact on international bioinformatics research, existing implementations remain fragmented across specialized tools. To address this gap, the **T**ianjin **U**niversity **B**io**I**nformatics **C**enter (**TUBIC**) developed **ZcurveHub** – a trinity platform integrating:  
+- Database that stores over 220,000 Z-curve visualized genome records (https://tubic.tju.edu.cn/zcurve/database)
+- Multiple web tools that can conduct genomic analysis online (https://tubic.tju.edu.cn/zcurve)
+- Python package **ZcurvePy** with flexible APIs and commandline tools (https://pypi.org/project/zcurvepy/)
 
-- Python package *ZcurvePy* with flexible APIs and commandline tools (https://pypi.org/project/zcurvepy/)
-- Web Service that can conduct genomic analysis online (http://tubic.tju.edu.cn/zcurve/ | https://tubic.org/zcurve/)
-- Database that stores nearly 220,000 structured Z-curve related data (http://tubic.tju.edu.cn/zcurve/database)  
 
 ## Main Functions
-This generation of ZcurveHub mainly integrates 4 basic functions :
+ZcurveHub mainly integrates 4 basic functions :
 - **Genome Visualization with Z-curves**  
-Generate Z-curves and their derivatives (e.g., GC disparity, CpG profile) from raw sequences, with customizable visualization of geometric features displayed in 2D or 3D. Supports FASTA and GenBank formats. The following table lists the main curve types provided by the package:
+Generate Z-curves and their derivatives (e.g., GC disparity, CpG profile) from nucleotide sequences, with customizable visualization displayed in 2D or 3D. Supports FASTA and GenBank formats. The following table lists the main curve types provided by ZcurveHub:
     |Name                     |Mathematical Expression                | Python API                  | CLT Code |
     |:-----------------------:|:--------------------------------------|:----------------------------|:--------:|
     |RY disparity             |$x_{n}=(A_{n}+G_{n})-(C_{n}+T_{n})$    |ZcurvePlotter.RY_disparity   |RY        |
@@ -25,7 +25,7 @@ Generate Z-curves and their derivatives (e.g., GC disparity, CpG profile) from r
     |GC' curve                |$d_{\rm GC}^{'}(n)=d_{\rm GC}(n) - kn$ |ZcurvePlotter.GC_prime_curve |GP        |
     |CpG profile              |$z_{n}=2{CpG}_{n} - (k + 1)n$          |ZcurvePlotter.CpG_prime_curve|CG        |           
 - **Feature Extraction and Selection**  
-Extract and select features using Z-curve parameters more customarily and flexibly compared to non-standalone modules integrated into other software, and explores its powerful application in gene prediction, promoter classification, replication origin recognition, etc. with machine learning or deep learning. The following table lists the calculation methods of Z-curve transformation provided by the software package: 
+Extract and select features using Z-curve parameters more flexibly compared to non-standalone modules integrated into other softwares, and explores its powerful application in gene prediction, promoter classification, replication origin recognition, etc., with machine learning or deep learning. The following table lists the calculation methods of Z-curve transformation provided by ZcurveHub: 
     |Name                             |Mathematical Expression                                | Python API                  | Digit    |
     |:-------------------------------:|:------------------------------------------------------|:----------------------------|:--------:|
     |Mononucleotide Z-curve|$x=(a+g)-(c+t)$<br/>$y=(a+c)-(g+t)$<br/>$z=(a+t)-(g+c)$|ZcurveEncoder.mononucl_transform|$3$|
@@ -38,18 +38,18 @@ Extract and select features using Z-curve parameters more customarily and flexib
 
     **\*** The value of $k$ and $i_{\rm max}$ varies in the integer range [1, 6].
 - **Accurate Curve Segmentation**  
-Detect critical structural boundaries using genome order index algorithm, identifying candidate regions for replication origins, horizontal gene transfer event or CpG islands in eukaryotic genomes. The following table lists the order index for each segmentation algorithm:
+Detect critical structural boundaries using genome order index algorithm, identifying candidate regions for replication origins, genomic islands, or isochores and CpG islands in eukaryotic genomes. The following table lists the order index for each segmentation algorithm:
     | Segmentation Target | Order Index S(P)                | Application                       |
     |:-------------------:|:--------------------------------|:----------------------------------|
     |Z-curve              |$S({\rm P})=a^2+g^2+c^2+t^2$     |Replication Origin Recognition     |
     |RY disparity         |$S({\rm P})=(a^2+g^2)+(c^2+t^2)$ |Mitochondrial rRNA Region Search   |
     |MK disparity         |$S({\rm P})=(a^2+c^2)+(g^2+t^2)$ |Mitochondrial $\rm O_L$ Recognition|
-    |WS disparity         |$S({\rm P})=(a^2+t^2)+(g^2+c^2)$ |Genomic Island Search              |
+    |WS disparity         |$S({\rm P})=(a^2+t^2)+(g^2+c^2)$ |Genome Island / Isochore Search              |
     |AT disparity         |$S({\rm P})=a^2+t^2$             |                                   |
     |GC disparity         |$S({\rm P})=g^2+c^2$             |Leading/Lagging Chain search       |
     |CpG profile        |$S({\rm P})=[p_n({\rm CpG})]^2+[1-p_n({\rm CpG})]^2$ |CpG Island Search|
 - **Build Classification Models**  
-Construct nucleic acid sequence classifier with biological function based on machine learning or deep learning framework, high-precision protein gene recognizers for specific species taxa of prokaryotes, which is very useful when studying newly sequenced or resequenced species that are closely related.
+Construct nucleic acid sequence classifier with biological function based on machine learning framework, high-precision protein gene recognizers for specific species taxa of prokaryotes, which is very useful when studying resequenced species or newly sequenced that are closely related.
 ## Technical Highlights
 1. **High-Performance Hybrid Architecture**
     - **C/C++ Acceleration**  
@@ -61,6 +61,7 @@ Construct nucleic acid sequence classifier with biological function based on mac
 2. **Cross-Paradigm Interfaces**
     - **Web Service Interfaces**  
     User-friendly Web interface enables you to quickly analyze data using cloud resources without installation, making it easy for beginners.  
+    
     - ![Web Service Interface](./images/webserver.png)
 
     - **Command-Line Interface**  
@@ -70,7 +71,7 @@ Construct nucleic acid sequence classifier with biological function based on mac
         ```
     
     - **Python API**  
-    Object-oriented interfaces for developers, enabling customizable workflows and real-time result callbacks, e.g.
+    Object-oriented interfaces for developers, enabling customizable workflows, e.g.
         ```python
         # Init ZcurveEncoder
         from ZcurvePy import BatchZcurveEncoder
@@ -83,7 +84,7 @@ Construct nucleic acid sequence classifier with biological function based on mac
         ```
 3. **Ecosystem Integration**  
     - **Data Connectivity**  
-    Built-in integration with [Biopython](https://pypi.org/project/biopython/) and [ncbi-acc-download](https://pypi.org/project/ncbi-acc-download/) modules for direct sequence retrieval from NCBI databases, with automated parsing of FASTA/GenBank formats.
+    Built-in integration with [Biopython](https://pypi.org/project/biopython/) modules for direct sequence retrieval from NCBI databases, with automated parsing of FASTA/GenBank formats.
     - **ML Compatibility**  
     Extracted Z-curve features are directly compatible with [scikit-learn](https://scikit-learn.org/) (traditional ML) and [PyTorch](https://scikit-learn.org/) (deep learning), including pre-trained models (e.g., Ori-FinderH, Nmix).
     - **Visualization Tools**  

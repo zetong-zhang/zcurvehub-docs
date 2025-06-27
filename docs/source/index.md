@@ -16,10 +16,8 @@ quickstart.md
 pythonapi.md
 commandline.md
 database.md
-webserver.md
+tools.md
 authors.md
-reference.md
-citingcontact.md
-acknowledgment.md
+about.md
 appendix.md
 advanced/*

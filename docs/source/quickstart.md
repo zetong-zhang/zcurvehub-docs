@@ -1,6 +1,23 @@
 # Quickstart
-We provide the installation of the Python package here, along with a set of simple examples of its usage. Please read the tutorial of Web Service [here](./webserver.md) if you want to use the functions on the Internet.
-## Installation
+Here we provide usage examples of web tools and Python package, as well as the installation method of the latter.
+## Web Tools
+*Note: We will not elaborate on the meanings of each parameter in this chapter's tutorial. If you want to know about it, please refer to [here](./tools.md).*
+### Usage Examples
+#### Z-curve Plotter
+In this section, we will show how to visualize and compare genomes of different species strains, and find the DNA replication origins of them (for bacteria). First, choose 2 genomes and upload them. For convenience, We upload the example sequences (*E. coli* SMS-3-5 [NC_010498.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_010498.1) and MG1655 [NC_000913.3](https://www.ncbi.nlm.nih.gov/nuccore/NC_000913.3)) through the online download function, which is able to fetch data from NCBI Nucleotide database. You can also upload your own files to complete this step.  
+
+![Plotter Example Step 1](./images/quickstart/plotter_example_1.png)  
+
+Then switch the plotter mode to 3D mode, adjust the settings and submit via the button below. Our example uses the original version of the Z curve, so we just use the default values. Finally, you can see the 3D representation of the two genomes. Obviously, the two genomes have similar geometric structures, which indicates that they have the same organizational pattern, only differing in local details.  
+
+![Plotter Example Step 2](./images/quickstart/plotter_example_2.png)
+
+Due to the significant compositional differences between the leading and lagging strands of the bacterial genome, the shape of the Z curve will be in the form of a "Z", and the replication origin element is located at the turning point. A turning point of SMS-3-5 is 3925461, which corresponds to the replication initiation point (3925744..3925975) as annotated by NCBI.
+
+![Plotter Example Step 3](./images/quickstart/plotter_example_3.png)
+
+## Python Package
+### Installation
 Python includes the package management system `pip` which should allow you to install ZcurvePy and its dependencies if needed, as well as upgrade or uninstall with just one command in the terminal:
 ```bash
 python -m pip install zcurvepy
@@ -12,11 +29,11 @@ Starting from 1.5.11, the return value types of some frequently used API functio
 ```bash
 python -m pip install "numpy>=1.21,<2.0"
 ```
-### Python Requirements
+#### Python Requirements
 Python 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 are supported. We currently recommend using Python 3.9.6 (https://www.python.org/downloads/release/python-396/)
-### Operating System
+#### Operating System
 Windows 10/11, macOS, and Linux running on x86_64 arch are supported. Note that some features of Matplotlib may not work on systems without a graphic interface (e.g., RedHat).
-## Code Examples
+### Usage Examples
 1. Generate Z-curves and derivatives  
    (1) Python API implementation:  
 
