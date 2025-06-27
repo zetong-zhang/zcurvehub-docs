@@ -1,4 +1,4 @@
-# Tools
+# Web Tools
 ZcurveHub provides various tools for analyzing genomes using Z-curve method, which are freely available on https://tubic.tju.edu.cn/zcurve/.
 
 ## Z-curve Plotter

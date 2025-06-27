@@ -7,7 +7,7 @@ copyright = '2025, TUBIC'
 author = 'TUBIC'
 
 release = '1.6'
-version = '1.6.0'
+version = '1.6.1'
 
 # -- General configuration
 

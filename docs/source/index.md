@@ -13,10 +13,10 @@ ZcurveHub aims to build a comprehensive, one-stop bioinformatics platform design
 whatsnew.md
 introduction.md
 quickstart.md
+database.md
+webtools.md
 pythonapi.md
 commandline.md
-database.md
-tools.md
 authors.md
 about.md
 appendix.md
